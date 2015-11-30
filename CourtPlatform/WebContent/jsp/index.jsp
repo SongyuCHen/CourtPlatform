@@ -15,40 +15,30 @@
 <title>定西法院系统集成平台</title>
 </head>
 <body>
-	<div id="apps">
-		<div class="index-btn unhovered">
-			<div class="text">
-				应用平台
-			</div>			
-		</div>
-		<div class="index-btn-shadow">
-		</div>
-	</div>
-	<div id="video">
-		<div class="index-btn unhovered">
-			<div class="text">
-				视频集控
-			</div>			
-		</div>
-		<div class="index-btn-shadow">
-		</div>
-	</div>
-	<div id="data">
-		<div class="index-btn unhovered">
-			<div class="text">
-				数据中心
-			</div>			
-		</div>
-		<div class="index-btn-shadow">
-		</div>
-	</div>
-	<div id="detail">
-		<div class="index-btn unhovered">
-			<div class="text">
-				走进定西
+	<div class="btn-bar">
+		<div id="apps" class="btn-wrapper">
+			<div class="index-btn unhovered">
+				<div class="text">应用平台</div>
 			</div>
+			<div class="index-btn-shadow"></div>
 		</div>
-		<div class="index-btn-shadow">
+		<div id="video" class="btn-wrapper">
+			<div class="index-btn unhovered">
+				<div class="text">视频集控</div>
+			</div>
+			<div class="index-btn-shadow"></div>
+		</div>
+		<div id="data" class="btn-wrapper">
+			<div class="index-btn unhovered">
+				<div class="text">数据中心</div>
+			</div>
+			<div class="index-btn-shadow"></div>
+		</div>
+		<div id="detail" class="btn-wrapper">
+			<div class="index-btn unhovered">
+				<div class="text">走进定西</div>
+			</div>
+			<div class="index-btn-shadow"></div>
 		</div>
 	</div>
 </body>
