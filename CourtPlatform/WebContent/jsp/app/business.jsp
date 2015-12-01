@@ -5,14 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/index/index.css" />
+	href="${pageContext.request.contextPath}/css/app/business.css" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/cp_common.js"></script>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/index/index.js"></script>
-<title>定西法院系统集成平台</title>
+	src="${pageContext.request.contextPath}/js/app/business.js"></script>
+<title>业务应用系统</title>
 </head>
 <body>
 	<div class="btn-bar">
@@ -22,24 +22,8 @@
 			</div>
 			<div class="index-btn-shadow"></div>
 		</div>
-		<div id="video" class="btn-wrapper">
-			<div class="index-btn unhovered">
-				<div class="text">视频集控</div>
-			</div>
-			<div class="index-btn-shadow"></div>
-		</div>
-		<div id="data" class="btn-wrapper">
-			<div class="index-btn unhovered">
-				<div class="text">数据中心</div>
-			</div>
-			<div class="index-btn-shadow"></div>
-		</div>
-		<div id="detail" class="btn-wrapper">
-			<div class="index-btn unhovered">
-				<div class="text">走进定西</div>
-			</div>
-			<div class="index-btn-shadow"></div>
-		</div>
+	</div>
+	<div class="board">
 	</div>
 </body>
 </html>
