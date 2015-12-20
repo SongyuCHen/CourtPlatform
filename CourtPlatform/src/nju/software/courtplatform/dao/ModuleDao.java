@@ -24,4 +24,9 @@ public class ModuleDao extends BaseDao{
 	public List<TModule> getSubModules(TModule m){
 		return sf.getCurrentSession().createCriteria(TModule.class).add(Restrictions.eq("parent", m.getBh())).addOrder(Order.asc("xssx")).list();
 	}
+	
+	public TModule getTModuleByUrl(String c_url){
+		return (TModule)sf.getCurrentSession().createCriteria(TModule.class).add(Restrictions.eq("c_url", c_url)).uniqueResult();
+	}
+
 }
