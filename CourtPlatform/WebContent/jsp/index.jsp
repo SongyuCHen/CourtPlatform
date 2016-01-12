@@ -17,7 +17,7 @@
 <body>
 	<div class="btn-bar">
 		<div id="app" class="btn-wrapper">
-			<div class="index-btn unhovered">
+			<div class="index-btn unhovered" onclick="toBusiness()">
 				<div class="text">应用平台</div>
 			</div>
 			<div class="index-btn-shadow"></div>

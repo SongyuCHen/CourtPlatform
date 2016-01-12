@@ -5,3 +5,6 @@ $(function() {
 		$(this).removeClass("hovered").addClass("unhovered");
 	});
 });
+function toBusiness(){
+	window.location.href="./app/business";
+}

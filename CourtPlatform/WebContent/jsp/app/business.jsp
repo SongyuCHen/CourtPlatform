@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -70,37 +71,32 @@
 	<div class="btn-bar">
 		<div class="btn-wrapper">
 			<div class="index-btn unhovered">
-				<div class="text">应用平台</div>
+				<div class="text">${menuContext.currentModel.name}</div>
 			</div>
 			<div class="index-btn-shadow"></div>
 		</div>
+		<c:forEach items="${menuContext.subModels}" var="subModel"> 
 		<div class="sbtn-wrapper">
-			<div class="sbtn unhovered active">
-				<div class="text">业务应用系统</div>
+			<div class="sbtn unhovered" onclick="show_sub_system('${subModel.c_url}',this)">
+				<div class="text">${subModel.name}</div>
 			</div>
 			<div class="sbtn-shadow"></div>
 		</div>
-		<div class="sbtn-wrapper">
-			<div class="sbtn unhovered">
-				<div class="text">业务辅助系统</div>
-			</div>
-			<div class="sbtn-shadow"></div>
-		</div>
-		<div class="sbtn-wrapper">
-			<div class="sbtn unhovered">
-				<div class="text">通用系统</div>
-			</div>
-			<div class="sbtn-shadow"></div>
-		</div>
-		<div class="sbtn-wrapper">
-			<div class="sbtn unhovered">
-				<div class="text">返回首页</div>
-			</div>
-			<div class="sbtn-shadow"></div>
-		</div>
+		</c:forEach>
+
 		
 	</div>
 	<div class="board">
 	</div>
+	<script type="text/javascript">
+	function show_sub_system(url,e){
+		$(".active").attr("class","sbtn unhovered");
+		$(e).attr("class",$(e).attr("class")+" active");
+		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
+			//$scope.content = data;
+			alert(data);
+		}});
+	}
+	</script>
 </body>
 </html>
