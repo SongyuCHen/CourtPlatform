@@ -10,7 +10,7 @@
             <generator class="assigned" />
         </id>
         <property name="levels" type="java.lang.Integer">
-            <column name="LEVELS" />
+            <column name="RANK" />
         </property>
         <property name="name" type="java.lang.String">
             <column name="NAME" />
