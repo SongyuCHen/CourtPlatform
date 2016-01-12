@@ -25,10 +25,11 @@ public class AppController extends BaseController{
 		return mv;
 	}
 	
-	@RequestMapping(value="/app/{url}",method=RequestMethod.POST)
+	@RequestMapping(value="/app/{c}",method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView getSubPage(@PathVariable String url){
+	public ModelAndView getSubPage(@PathVariable String c,String url){
 		ModelAndView mv = new ModelAndView();
+		System.err.println(url);
 		mv.setViewName("app/business");
 		mv.addObject("menuContext", ms.getMenuContext(url));
 		return mv;

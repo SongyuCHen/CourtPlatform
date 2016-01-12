@@ -102,7 +102,7 @@
 					 $(line).attr("class","icon-line") ;
 					 $(".icon-container").append(line);
 				}
-				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/yw-fzxt.png\"/></div>");
+				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 			}
 			
 		}});
