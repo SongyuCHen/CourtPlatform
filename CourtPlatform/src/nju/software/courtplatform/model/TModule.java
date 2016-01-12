@@ -10,6 +10,8 @@ public class TModule
 	
 	private String c_url;
 	
+	private String c_img;
+	
 	private Integer parent;
 	
 	private Integer xssx;
@@ -72,6 +74,14 @@ public class TModule
 	public void setXssx(Integer xssx)
 	{
 		this.xssx = xssx;
+	}
+
+	public String getC_img() {
+		return c_img;
+	}
+
+	public void setC_img(String c_img) {
+		this.c_img = c_img;
 	}
 	
 }

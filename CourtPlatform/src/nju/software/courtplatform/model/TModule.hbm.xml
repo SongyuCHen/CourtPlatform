@@ -18,6 +18,9 @@
         <property name="c_url" type="java.lang.String">
             <column name="C_URL" />
         </property>
+        <property name="c_img" type="java.lang.String">
+            <column name="C_IMG" />
+        </property>
         <property name="parent" type="java.lang.Integer">
             <column name="PARENT" />
         </property>

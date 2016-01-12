@@ -22,7 +22,7 @@
 <body>
 
 	<div class="icon-container">
-		<div class="icon-line">
+		<%-- <div class="icon-line">
 			<div class="icon">
 				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
 			</div>
@@ -58,7 +58,7 @@
 			<div class="icon">
 				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
 			</div>
-		</div>
+		</div> --%>
 	</div>
 
 
@@ -93,10 +93,23 @@
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
 		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
-			//$scope.content = data;
-			alert(data);
+			$(".icon-line").remove();
+			var line;
+			var models = data.modelMap.menuContext.subModels;
+			for(var o in models){
+				if(o%6 == 0){
+					 line = document.createElement("div");
+					 $(line).attr("class","icon-line") ;
+					 $(".icon-container").append(line);
+				}
+				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/yw-fzxt.png\"/></div>");
+			}
+			
 		}});
 	}
+	$(function(){
+		$(".btn-bar .sbtn:first").click();
+	});
 	</script>
 </body>
 </html>

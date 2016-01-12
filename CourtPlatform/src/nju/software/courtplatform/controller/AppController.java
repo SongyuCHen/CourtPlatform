@@ -26,6 +26,7 @@ public class AppController extends BaseController{
 	}
 	
 	@RequestMapping(value="/app/{url}",method=RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView getSubPage(@PathVariable String url){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("app/business");
