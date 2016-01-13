@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class AppController extends BaseController{
+public class SjzxController extends BaseController{
 	
 	@Autowired
 	private MenuService ms; 
 	
-	@RequestMapping(value = "/app/business")
+	@RequestMapping(value = "/sjzx/index")
 	public ModelAndView getPage(){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("app/business");
-		mv.addObject("menuContext", ms.getMenuContext("app/business"));
+		mv.setViewName("/sjzx/index");
+		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
 		return mv;
 	}
 	
-	@RequestMapping(value="/app/{c}",method=RequestMethod.POST)
+	@RequestMapping(value="/sjzx/{c}",method=RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView getSubPage(@PathVariable String c,String url){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("app/business");
+		mv.setViewName("sjzx/business");
 		mv.addObject("menuContext", ms.getMenuContext(url));
 		return mv;
 	}

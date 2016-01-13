@@ -67,26 +67,40 @@
 
 
 
-
+<div class="left-arrow" onclick="scroll_left()">
+		<img src="${pageContext.request.contextPath}/images/arrow_left.png" />
+	</div>
 	<div class="btn-bar">
+	
 		<div class="btn-wrapper">
-			<div class="index-btn unhovered">
+			<div class="index-btn unhovered" onclick="fold_models()">
 				<div class="text">${menuContext.currentModel.name}</div>
 			</div>
 			<div class="index-btn-shadow"></div>
 		</div>
-		<c:forEach items="${menuContext.subModels}" var="subModel"> 
-		<div class="sbtn-wrapper">
-			<div class="sbtn unhovered" onclick="show_sub_system('${subModel.c_url}',this)">
-				<div class="text">${subModel.name}</div>
+		<div class="sbtns">
+			<c:forEach items="${menuContext.subModels}" var="subModel" varStatus="status"> 
+			<c:if test="${status.index%sessionScope.per_page == 0}">
+				<div class="sbtn-group" data-page="${status.index/sessionScope.per_page}">
+			</c:if>
+			<div class="sbtn-wrapper">
+				<div class="sbtn unhovered" onclick="show_sub_system('${subModel.c_url}',this)">
+					<div class="text">${subModel.name}</div>
+				</div>
+				<div class="sbtn-shadow"></div>
 			</div>
-			<div class="sbtn-shadow"></div>
+			<c:if test="${status.index%sessionScope.per_page == sessionScope.per_page-1}">
+				</div>
+			</c:if>
+			</c:forEach>
 		</div>
-		</c:forEach>
-
 		
 	</div>
+	<div class="right-arrow" onclick="scroll_right()">
+		<img src="${pageContext.request.contextPath}/images/arrow_right.png" />
+	</div>
 	<div class="board">
+		<img src="${pageContext.request.contextPath}/images/board.png" />
 	</div>
 	<script type="text/javascript">
 	function show_sub_system(url,e){
@@ -109,7 +123,60 @@
 	}
 	$(function(){
 		$(".btn-bar .sbtn:first").click();
+		/* var i = 0;
+		$(".sbtn-wrapper").each(function(){
+			$(this).css("left",465+200*i+"px");
+			i++;
+		}); */
 	});
+	var MODEL_COUNT = ${menuContext.subModels.size()};
+	var PER_PAGE = ${sessionScope.per_page};
+	var page_count = MODEL_COUNT%PER_PAGE == 0 ? MODEL_COUNT/PER_PAGE : (MODEL_COUNT/PER_PAGE+1);
+	var cur_page = 0;
+	$(".sbtn-group").css("width",200*PER_PAGE+"px");
+	$("[data-page='"+cur_page+".0'] .sbtn-wrapper").animate({
+		marginLeft:"0px"
+	});
+	isFold = 0;
+	function scroll_left(){
+		if(cur_page > 0 && !isFold){
+			$(".sbtn-group").animate({
+				marginLeft:"+="+200*PER_PAGE+"px"
+			}); 
+			cur_page--;
+			for(var j = cur_page ; j < page_count ; j++){
+				$("[data-page='"+j+".0']").css("margin-left","0");
+			}
+		}
+	}
+	function scroll_right(){
+		if(cur_page < parseInt(page_count-1) && !isFold){
+			var i = cur_page;
+			for(var j = cur_page ; j>=0 ; j--){
+				$("[data-page='"+j+".0']").animate({
+					marginLeft:"-="+200*PER_PAGE+"px"
+				}); 
+			}
+			cur_page++;
+			for(var j = cur_page ; j < page_count ; j++){
+				$("[data-page='"+j+".0']").css("margin-left","0");
+			}
+		}
+	}
+	var isFold = 0;
+	function fold_models(){
+		if(!isFold){
+			$("[data-page='"+cur_page+".0'] .sbtn-wrapper").animate({
+				marginLeft:"-="+200*PER_PAGE+"px"
+			}); 
+			isFold = 1;
+		}else{
+			$("[data-page='"+cur_page+".0'] .sbtn-wrapper").animate({
+				marginLeft:"0px"
+			});
+			isFold = 0;
+		}
+	}
 	</script>
 </body>
 </html>

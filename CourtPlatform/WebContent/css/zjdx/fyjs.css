@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+.icon-container{
+	width:80%;
+	text-align:center;
+	margin-left:10%
+}
+.description{
+	width:70%;
+	display:inline-block;
+	height:300px;
+	background-color:rgba(255,255,255,0.5);
+	vertical-align: top;
+	margin-left:20px;
+	border-radius:5px;		
+}
