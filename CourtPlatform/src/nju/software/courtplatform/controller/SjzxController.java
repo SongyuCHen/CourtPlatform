@@ -25,12 +25,11 @@ public class SjzxController extends BaseController{
 		return mv;
 	}
 	
-	@RequestMapping(value="/sjzx/{c}",method=RequestMethod.POST)
-	@ResponseBody
-	public ModelAndView getSubPage(@PathVariable String c,String url){
+	@RequestMapping(value="/sjzx/business",method=RequestMethod.GET)
+	public ModelAndView getSubPage(String url){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("sjzx/business");
-		mv.addObject("menuContext", ms.getMenuContext(url));
+		mv.setViewName("sjzx/fwqyxjk");
+		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
 		return mv;
 	}
 

@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/global.css" />
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/app/common.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/app/business.css" />
@@ -117,6 +119,13 @@
 					 $(".icon-container").append(line);
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+				$(".icon").click(function(){
+					window.location.href="${pageContext.request.contextPath}/sjzx"+"/business";
+					/* $.ajax({url:"${pageContext.request.contextPath}/sjzx"+"/business",data:{"url":url},type:"post",dataType:"html",async:false,success:function(data){
+						$(".icon-container").empty();
+						$(".icon-container").append(data);
+					}}); */
+				});
 			}
 			
 		}});

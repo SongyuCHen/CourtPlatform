@@ -24,6 +24,21 @@
 <body>
 
 	<div class="icon-container">
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/sjzx/fwqyxjk.css" />
+<div class="left-col">
+<p>服务器1</p>
+<p>服务器2</p>
+<p>服务器3</p>
+<p>服务器4</p>
+<p>服务器5</p>
+<p>服务器6</p>
+<p>服务器7</p>
+<p>服务器8</p>
+<p>服务器9</p>
+<p>服务器10</p>
+</div>
+<div class="right-col"></div>
 		<%-- <div class="icon-line">
 			<div class="icon">
 				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
@@ -108,19 +123,8 @@
 	function show_sub_system(url,e){
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
-		$.ajax({url:"${pageContext.request.contextPath}/zjdx"+"/business",data:{"url":url},type:"post",dataType:"html",async:false,success:function(data){
-			$(".icon-container").empty();
-			$(".icon-container").append(data);
-		}});
-	}
-	$(function(){
-		$(".btn-bar .sbtn:first").click();
-		/* var i = 0;
-		$(".sbtn-wrapper").each(function(){
-			$(this).css("left",465+200*i+"px");
-			i++;
-		}); */
-	});
+		window.location.href="${pageContext.request.contextPath}/sjzx"+"/business";
+	};
 	var MODEL_COUNT = ${menuContext.subModels.size()};
 	var PER_PAGE = ${sessionScope.per_page};
 	var page_count = MODEL_COUNT%PER_PAGE == 0 ? MODEL_COUNT/PER_PAGE : (MODEL_COUNT/PER_PAGE+1);
