@@ -17,6 +17,7 @@
 }
 .icon-container .right-col{
 	width:75%;
+	text-align: center;
 }
 .icon-container .left-col p{
 	line-height:40px;
@@ -26,4 +27,30 @@
 .icon-container .left-col p:hover{
 	background-color: #eee;
 	cursor: pointer;
+}
+.icon-container .right-col>table{
+	width:95%;
+	margin:5px 2%;
+	border-collapse: collapse;
+	text-align: left;
+}
+.icon-container .right-col>table td{
+	padding:10px;
+	vertical-align: top;
+}
+.icon-container .right-col>table td p{
+	font-size:14px;
+	
+}
+.icon-container .right-col>table td>div{
+	background-color: rgba(255,255,255,0.5);
+	border-radius:3px;
+	padding:5px;
+}
+
+.icon-container .right-col>table td>.fs{
+	margin:0 10px;
+	border-radius:3px;
+	padding:5px;
+	width:200px;
 }

@@ -22,61 +22,66 @@
 <title>业务应用系统</title>
 </head>
 <body>
-
-	<div class="icon-container">
-	<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/sjzx/fwqyxjk.css" />
-<div class="left-col">
-<p>服务器1</p>
-<p>服务器2</p>
-<p>服务器3</p>
-<p>服务器4</p>
-<p>服务器5</p>
-<p>服务器6</p>
-<p>服务器7</p>
-<p>服务器8</p>
-<p>服务器9</p>
-<p>服务器10</p>
-</div>
-<div class="right-col"></div>
-		<%-- <div class="icon-line">
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-		</div>
-		<div class="icon-line">
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-		</div> --%>
+<div class="icon-container">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/sjzx/fwqyxjk.css" />
+	<div class="left-col">
+		<p>服务器1</p>
+		<p>服务器2</p>
+		<p>服务器3</p>
+		<p>服务器4</p>
+		<p>服务器5</p>
+		<p>服务器6</p>
+		<p>服务器7</p>
+		<p>服务器8</p>
+		<p>服务器9</p>
+		<p>服务器10</p>
 	</div>
+	<div class="right-col">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+					<h3>系统</h3>
+					<div>
+					<p>系统名称：${machine.systemInfo.getName()}</p>
+					<p>系统版本：${machine.systemInfo.getVersion()}</p>
+					<p>系统类型：${machine.systemInfo.getArch()}</p>
+					</div>
+				</td>
+				<td>
+					<h3>内存使用</h3>
+					<div>
+					<p>内存总量：${machine.memoryInfo.getMemTotal()}</p>
+					<p>已使用量：${machine.memoryInfo.getMemUsed()}</p>
+					<p>未使用量：${machine.memoryInfo.getMemNotUsed()}</p>
+					</div>
+				</td>
+				<td>
+					<h3>CPU</h3>
+					<div>
+					<p>核心数量：${machine.cpuInfo.getCPUnum()}</p>
+					<p>CPU类型：${machine.cpuInfo.getVender()} ${machine.cpuInfo.getModel()}(${machine.cpuInfo.getRate()})</p>
+					<p>CPU缓存：${machine.cpuInfo.getCache()}</p>
+					</div>
+				</td>
+			</tr>
+				
+			<tr>
+				
+				<td colspan="3">
+					<h3>硬盘使用</h3>
+					<c:forEach items="${machine.fileSystems}" var="fs" varStatus="status"> 
+						<div class="fs" style="float:left">
+							<p>盘符名称：${fs.getName()}</p>
+							<p>硬盘容量：${fs.getTotal()}</p>
+							<p>已使用量：${fs.getUsed()}</p>
+							<p>已使用率：${fs.getPercent()}</p>
+						</div>
+					</c:forEach>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
 
 
 
@@ -123,8 +128,25 @@
 	function show_sub_system(url,e){
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
-		window.location.href="${pageContext.request.contextPath}/sjzx"+"/business";
-	};
+		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
+			$(".icon-line").remove();
+			var line;
+			var models = data.modelMap.menuContext.subModels;
+			for(var o in models){
+				if(o%6 == 0){
+					 line = document.createElement("div");
+					 $(line).attr("class","icon-line") ;
+					 $(".icon-container").empty();
+					 $(".icon-container").append(line);
+				}
+				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+				$(".icon").click(function(){
+					window.location.href="${pageContext.request.contextPath}/sjzx"+"/business";
+				});
+			}
+			
+		}});
+	}
 	var MODEL_COUNT = ${menuContext.subModels.size()};
 	var PER_PAGE = ${sessionScope.per_page};
 	var page_count = MODEL_COUNT%PER_PAGE == 0 ? MODEL_COUNT/PER_PAGE : (MODEL_COUNT/PER_PAGE+1);

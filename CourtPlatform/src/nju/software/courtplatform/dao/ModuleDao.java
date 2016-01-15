@@ -28,5 +28,4 @@ public class ModuleDao extends BaseDao{
 	public TModule getTModuleByUrl(String c_url){
 		return (TModule)sf.getCurrentSession().createCriteria(TModule.class).add(Restrictions.eq("c_url", c_url)).uniqueResult();
 	}
-
 }
