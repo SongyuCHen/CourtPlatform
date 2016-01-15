@@ -19,7 +19,6 @@ public class IndexController extends BaseController{
 		httpSession.setAttribute("width", width);
 		int per_page = (int)((width*0.8-324)/200);
 		httpSession.setAttribute("per_page", per_page);
-		System.err.println("per_page:"+per_page);
 		return "success";
 	}
 

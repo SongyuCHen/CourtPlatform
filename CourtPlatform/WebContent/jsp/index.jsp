@@ -48,7 +48,7 @@ $.ajax({url:"${pageContext.request.contextPath}/index/savewidth",
 		</div>
 		<div id="detail" class="btn-wrapper">
 			<div class="index-btn unhovered" onclick="toZJDX()">
-				<div class="text">走进定西</div>
+				<div class="text">法院风采</div>
 			</div>
 			<div class="index-btn-shadow"></div>
 		</div>
