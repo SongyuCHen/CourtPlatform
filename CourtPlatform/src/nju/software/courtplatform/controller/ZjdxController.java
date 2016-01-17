@@ -26,10 +26,26 @@ public class ZjdxController extends BaseController{
 	}
 	
 	@RequestMapping(value="/zjdx/business",method=RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView getSubPage(String url){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("zjdx/fyjs");
 		mv.addObject("menuContext", ms.getMenuContext(url));
+		return mv;
+	}
+	
+	@RequestMapping(value="/zjdx/fyjs",method=RequestMethod.GET)
+	public ModelAndView getDescription(String url){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("zjdx/fyjs");
+		mv.addObject("menuContext", ms.getMenuContext("/zjdx/index"));
+		return mv;
+	}
+	@RequestMapping(value="/zjdx/yscl",method=RequestMethod.GET)
+	public ModelAndView getYSCL(String url){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("zjdx/yscl");
+		mv.addObject("menuContext", ms.getMenuContext("/zjdx/index"));
 		return mv;
 	}
 

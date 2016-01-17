@@ -19,51 +19,53 @@
 	src="${pageContext.request.contextPath}/js/app/common.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/app/business.js"></script>
+<style type="text/css">
+.icon-container{
+	width:80%;
+	margin: 0 10%;
+	padding-top:10px;
+	background-color: rgba(255,255,255,0.5);
+	border-radius:5px;
+	margin-top:120px;
+	height:420px
+}
+.detail_data{
+	width:100%;
+	background-color: rgba(0,0,0,0.5);
+	display: none;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:9999;
+}
+.detail_data > .close{
+	width:100px;
+	height:100px;
+	border-radius:50px;
+	margin: -50px -50px auto auto;
+	float:right;
+	background-color: #333;
+}
+
+.detail_data > .close > img{
+	margin:50px 0 0 10px;
+	width:40px;
+	height:40px
+}
+.detail_data > .close > img:hover{
+	cursor:pointer;
+}
+
+</style>
 <title>业务应用系统</title>
 </head>
 <body>
 
 	<div class="icon-container">
-		<%-- <div class="icon-line">
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-		</div>
-		<div class="icon-line">
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-		</div> --%>
+		<div onclick="show_detail_data()">查看详情</div>
 	</div>
 
-
+	
 
 
 
@@ -104,13 +106,23 @@
 	<div class="board">
 		<img src="${pageContext.request.contextPath}/images/board.png" />
 	</div>
+	<div class="detail_data">
+		<div class="close" onclick="close_detail()">
+			<img src="${pageContext.request.contextPath}/images/cross.png"/>
+		</div>
+	</div>
+	
 	<script type="text/javascript">
+	function show_detail_data(){
+		$(".detail_data").show();
+	}
+	function close_detail(){
+		$(".detail_data").hide();
+	}
 	function show_sub_system(url,e){
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
-		$.ajax({url:"${pageContext.request.contextPath}/zjdx"+"/business",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
-			/* $(".icon-container").empty();
-			$(".icon-container").append(data); */
+		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
 			$(".icon-line").remove();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
@@ -118,14 +130,18 @@
 				if(o%6 == 0){
 					 line = document.createElement("div");
 					 $(line).attr("class","icon-line") ;
-					 $(".icon-container").empty();
 					 $(".icon-container").append(line);
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/zjdx"+"/yscl";
+					window.location.href="${pageContext.request.contextPath}/sjzx"+"/business";
+					/* $.ajax({url:"${pageContext.request.contextPath}/sjzx"+"/business",data:{"url":url},type:"post",dataType:"html",async:false,success:function(data){
+						$(".icon-container").empty();
+						$(".icon-container").append(data);
+					}}); */
 				});
 			}
+			
 		}});
 	}
 	$(function(){
@@ -135,6 +151,10 @@
 			$(this).css("left",465+200*i+"px");
 			i++;
 		}); */
+		var h = document.body.scrollHeight;
+		var w = document.body.scrollWidth;
+		$(".detail_data").css("height",h+"px");
+		
 	});
 	var MODEL_COUNT = ${menuContext.subModels.size()};
 	var PER_PAGE = ${sessionScope.per_page};

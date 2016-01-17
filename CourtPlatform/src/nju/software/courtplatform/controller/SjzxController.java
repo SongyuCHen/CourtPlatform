@@ -32,9 +32,9 @@ public class SjzxController extends BaseController{
 	@RequestMapping(value="/sjzx/business",method=RequestMethod.GET)
 	public ModelAndView getSubPage(String url) throws SigarException{
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("sjzx/sjccjk");
+		mv.setViewName("sjzx/jcjgck");
 		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
-		mv.addObject("machine",mas.getMechineState("localhost"));
+		//mv.addObject("machine",mas.getMechineState("localhost"));
 		return mv;
 	}
 
