@@ -29,8 +29,10 @@
 		    					var subModules = data.modelMap.data.subModels;
 		    					for(var m in subModules){
 		    						var node = d.add(subModules[m].bh,subModules[m].parent,subModules[m].name,subModules[m].c_url,subModules[m].levels,subModules[m].c_img);
-		    						d.addNode(node);
+		    						//d.addNode(node);
 		    					}
+		    					
+		    					//alert(d.aNodes.length);
 		    				}
 		    			});    
 		        d.add(0,-1,'结点列表');

@@ -97,7 +97,7 @@ dTree.prototype.addNode = function(pNode) {
 	var n=0;
 	if (this.config.inOrder) n = pNode._ai;
 	for (n; n<this.aNodes.length; n++) {
-		if (this.aNodes[n].pid == pNode.id) {
+		if (this.aNodes[n].pid == pNode.id) {
 			var cn = this.aNodes[n];
 			cn._p = pNode;
 			cn._ai = n;
@@ -113,12 +113,12 @@ dTree.prototype.addNode = function(pNode) {
 			str += this.node(cn, n);
 			if (cn._ls) break;
 		}
-	}
+	}
 	return str;
 };
 
 // Creates the node icon, url and text
-dTree.prototype.node = function(node, nodeId) {
+dTree.prototype.node = function(node, nodeId) {	console.log(node.id);
 	var str = '<div class="dTreeNode">' + this.indent(node, nodeId);
 	if (this.config.useIcons) {
 		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._hc) ? this.icon.folder : this.icon.node);

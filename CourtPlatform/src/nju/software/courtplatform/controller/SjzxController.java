@@ -37,5 +37,30 @@ public class SjzxController extends BaseController{
 		//mv.addObject("machine",mas.getMechineState("localhost"));
 		return mv;
 	}
-
+	@RequestMapping(value=" /sjzx/sjbf/sjccjk",method=RequestMethod.GET)
+	public ModelAndView getSJCCJK(String url) throws SigarException{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("sjzx/sjccjk");
+		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
+		//mv.addObject("machine",mas.getMechineState("localhost"));
+		return mv;
+	}
+	
+	@RequestMapping(value=" /sjzx/sjbf/fwqyxjk",method=RequestMethod.GET)
+	public ModelAndView getFWQYXJK(String url) throws SigarException{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("sjzx/fwqyxjk");
+		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
+		//mv.addObject("machine",mas.getMechineState("localhost"));
+		return mv;
+	}
+	 
+	@RequestMapping(value=" /sjzx/sjbf/sjrbjk",method=RequestMethod.GET)
+	public ModelAndView getSJRBJK(String url) throws SigarException{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("sjzx/sjrbjk");
+		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
+		//mv.addObject("machine",mas.getMechineState("localhost"));
+		return mv;
+	}
 }

@@ -123,7 +123,7 @@
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/zjdx"+"/yscl";
+					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
 				});
 			}
 		}});

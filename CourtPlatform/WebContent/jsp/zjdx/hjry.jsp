@@ -297,7 +297,6 @@ $(function() {
 				controller: $('#bannerCtrl'),
 				activeControllerCls: 'active'
 			});
-	    });
 		$('#banner_tabs .flex-prev').click(function() {
 			bannerSlider.prev();
 		});
@@ -307,6 +306,7 @@ $(function() {
 		$(".slides a").click(function(){
 			$('#banner_tabs .flex-next').click();
 		});
+	    });
 		
 	});
 	var MODEL_COUNT = ${menuContext.subModels.size()};

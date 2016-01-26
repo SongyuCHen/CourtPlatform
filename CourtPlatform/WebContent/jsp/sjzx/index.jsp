@@ -120,7 +120,7 @@
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/sjzx"+"/business";
+					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
 					/* $.ajax({url:"${pageContext.request.contextPath}/sjzx"+"/business",data:{"url":url},type:"post",dataType:"html",async:false,success:function(data){
 						$(".icon-container").empty();
 						$(".icon-container").append(data);
