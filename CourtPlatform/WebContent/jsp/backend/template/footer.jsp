@@ -7,6 +7,22 @@
 </div>
 <a href="#" data-reveal-id="revealModal" class="revealtrigger" style="display:none">Click Me For A Modal</a>
 
+<script type="text/javascript">
+//唤起信息框
+function revealCall(content){
+	$("#revealModal").html(content);
+	$(".modal input").val("");
+	$('#revealModal').reveal({
+	     animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+	     animationspeed: 300,                       //how fast animtions are
+	     closeonbackgroundclick: true,              //if you click background will modal close?
+	     dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+	});	
+	setTimeout(function(){
+		$(".reveal-modal-bg").click();
+	}, 2000);
+}
+</script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

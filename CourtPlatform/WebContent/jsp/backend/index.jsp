@@ -19,7 +19,7 @@
         <div class="col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-2 tree">
 			  <script type="text/javascript">
 			  function buildTree(){
-		        var d = new dTree('d');
+		        d = new dTree('d');
 		        $.ajax(
 		    			{url:"${pageContext.request.contextPath}/backend/gettree",
 		    				type:"post",
@@ -377,20 +377,7 @@
 		    			}); 
     		}
     	}
-    	//唤起信息框
-    	function revealCall(content){
-    		$("#revealModal").html(content);
-    		$(".modal input").val("");
-			$('#revealModal').reveal({
-	    	     animation: 'fadeAndPop',                   //fade, fadeAndPop, none
-	    	     animationspeed: 300,                       //how fast animtions are
-	    	     closeonbackgroundclick: true,              //if you click background will modal close?
-	    	     dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
-	    	});	
-			setTimeout(function(){
-				$(".reveal-modal-bg").click();
-			}, 2000);
-    	}
+    	
     	
     	function removeSub(){
     		$.ajax(

@@ -1,7 +1,33 @@
 @CHARSET "UTF-8";
-table img{
+table td>img{
 	width:64px;
+}
+table img:hover{
+	cursor: pointer;
 }
 table textarea{
 	height:200px
+}
+
+table th{
+	text-align: center;
+}
+table .op{
+	width:24px;
+	height:24px;
+	background-color: #428bca;
+	float:left;
+	margin:5px;
+	border-radius:5px
+}
+
+table td{
+	line-height:70px !important;
+	vertical-align: middle !important;
+}
+table div{
+	padding:4px;
+}
+table div>img{
+	float:left;
 }
