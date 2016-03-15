@@ -19,6 +19,18 @@
 	src="${pageContext.request.contextPath}/js/app/common.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/app/business.js"></script>
+<style>
+/* jQuery jcImgScroll css */
+.jcImgScroll { position:relative; height:342px;  }
+.jcImgScroll li { border:1px solid #ccc; }
+.jcImgScroll li a { background:#fff; display:block; height:340px;  }
+.jcImgScroll li.loading a { background:#fff url(${pageContext.request.contextPath}/lib/picshow/img/loading.gif) no-repeat center center;} 
+.jcImgScroll li img,.jcImgScroll li,.jcImgScroll em,.jcImgScroll dl { display:none; border:0 none;}
+.jcImgScroll em.sPrev { background:url(${pageContext.request.contextPath}/lib/picshow2/images/arrow-left.png) no-repeat left center; }
+.jcImgScroll em.sNext { background:url(${pageContext.request.contextPath}/lib/picshow2/images/arrow-right.png) no-repeat right center;}
+.jcImgScroll dl dd { background:url(${pageContext.request.contextPath}/lib/picshow2/img/NumBtn.png) no-repeat 0 bottom; text-indent:-9em; }
+.jcImgScroll dl dd:hover,.jcImgScroll dl dd.curr { background-position:0 0; }
+</style>
 	<%-- 
 <!-- timeline -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/lib/timeline/css/history.css">
@@ -147,15 +159,31 @@
     left: 31%;
     text-align: center;
 }
-
+#demo1{
+	margin-top:20px;
+}
 </style>
+
+
+<script src="${pageContext.request.contextPath}/lib/picshow2/js/jQuery-1.7.1.js" language="javascript" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/lib/picshow2/js/jQuery-easing.js" language="javascript" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/lib/picshow2/js/jQuery-jcImgScroll.js" language="javascript" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+$(function(){
+	$("#demo1").jcImgScroll({
+		count : 3
+	});
+});
+</script>
 <title>院史陈列</title>
 </head>
 <body>
-
+<div class="back" style="width:500px;height:100px;float:left">
+	<a href="${pageContext.request.contextPath}/index" style="width:500px;height:100px;display: inline-block"></a>
+</div>
 	<div class="icon-container">
 		<!-- 轮播广告 -->
-<div id="banner_tabs" class="flexslider">
+<%-- <div id="banner_tabs" class="flexslider">
 	<ul class="slides">
 		<li>
 			<a title="">
@@ -188,19 +216,33 @@
 		<li><a>2</a></li>
 		<li><a>2</a></li>
 	</ol>
-</div>
-<script src="${pageContext.request.contextPath}/lib/picshow/js/slider.js"></script>
+</div> --%>
+
+<!-- 代码 开始 -->
+<div id="demo1" class="jcImgScroll">
+            <ul>
+                <li><a href="#" path="${pageContext.request.contextPath}/images/fy/anding.png" title="2014-2015年度甘肃省青年文明号111"></a></li>
+                <li><a href="#" path="${pageContext.request.contextPath}/images/fy/lintao.png" title="2014-2015年度甘肃省青年文明号222"></a></li>
+                <li><a href="#" path="${pageContext.request.contextPath}/images/fy/zhongyuan.png" title="2014-2015年度甘肃省青年文明号333"></a></li>
+<%--                 <li><a href="#" path="${pageContext.request.contextPath}/lib/picshow2/images/04.jpg" title="懒人图库 www.lanrentuku.com"></a></li>
+                <li><a href="#" path="${pageContext.request.contextPath}/lib/picshow2/images/05.jpg" title="懒人图库 www.lanrentuku.com"></a></li>
+                <li><a href="#" path="${pageContext.request.contextPath}/lib/picshow2/images/06.jpg" title="懒人图库 www.lanrentuku.com"></a></li>
+                <li><a href="#" path="${pageContext.request.contextPath}/lib/picshow2/images/07.jpg" title="懒人图库 www.lanrentuku.com"></a></li> --%>
+            </ul>
+	  </div>
+<!-- 代码 结束 -->
+<%-- <script src="${pageContext.request.contextPath}/lib/picshow/js/slider.js"></script>
 <script type="text/javascript">
 var _IMG_HEIGHT=600;
 var _IMG_WIDTH = 1920;
 $(function() {
 	
 })
-</script>
+</script> --%>
 	</div>
-
+<!-- 
 <div class="zimu">2014-2015年度甘肃省青年文明号</div>
-
+ -->
 
 
 
@@ -222,7 +264,7 @@ $(function() {
 				<div class="sbtn-group" data-page="${status.index/sessionScope.per_page}">
 			</c:if>
 			<div class="sbtn-wrapper">
-				<div class="sbtn unhovered" onclick="show_sub_system('${subModel.c_url}',this)">
+				<div class="sbtn unhovered" onclick="show_sub_system('${subModel.c_url}',this)"> 
 					<div class="text">${subModel.name}</div>
 				</div>
 				<div class="sbtn-shadow"></div>
@@ -240,7 +282,7 @@ $(function() {
 	<div class="board">
 		<img src="${pageContext.request.contextPath}/images/board.png" />
 	</div>
-	<script type="text/javascript">
+<script type="text/javascript">
 	var award_ptr = 0;
 	function show_sub_system(url,e){
 		$(".active").attr("class","sbtn unhovered");
@@ -249,6 +291,7 @@ $(function() {
 			/* $(".icon-container").empty();
 			$(".icon-container").append(data); */
 			$(".icon-line").remove();
+			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
 			for(var o in models){  
@@ -260,7 +303,7 @@ $(function() {
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/zjdx"+"/yscl";
+					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
 				});
 			}
 		}});
@@ -307,6 +350,9 @@ $(function() {
 			$('#banner_tabs .flex-next').click();
 		});
 	    });
+		
+		$("#demo1 div").css('border',"0");
+		$("#demo1 .select").click();
 		
 	});
 	var MODEL_COUNT = ${menuContext.subModels.size()};

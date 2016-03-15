@@ -39,7 +39,9 @@
 <title>院史陈列</title>
 </head>
 <body>
-
+<div class="back" style="width:500px;height:100px;float:left">
+	<a href="${pageContext.request.contextPath}/index" style="width:500px;height:100px;display: inline-block"></a>
+</div>
 <div class="icon-container">
 <section class="cd-horizontal-timeline">
 <div class="timeline">
@@ -256,6 +258,7 @@
 			/* $(".icon-container").empty();
 			$(".icon-container").append(data); */
 			$(".icon-line").remove();
+			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
 			for(var o in models){  
@@ -267,7 +270,7 @@
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/zjdx"+"/yscl";
+					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
 				});
 			}
 		}});

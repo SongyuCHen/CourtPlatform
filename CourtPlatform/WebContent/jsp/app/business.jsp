@@ -22,6 +22,9 @@
 <title>业务应用系统</title>
 </head>
 <body>
+<div class="back" style="width:500px;height:100px;float:left">
+	<a href="${pageContext.request.contextPath}/index" style="width:500px;height:100px;display: inline-block"></a>
+</div>
 
 	<div class="icon-container">
 		<%-- <div class="icon-line">
@@ -110,6 +113,7 @@
 		$(e).attr("class",$(e).attr("class")+" active");
 		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
 			$(".icon-line").remove();
+			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
 			for(var o in models){
