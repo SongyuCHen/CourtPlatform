@@ -83,8 +83,8 @@
 					alert("\"Count\" parameter can not be negative, you must base  !");
 					return false;
 				} else if(options.count%2 === 0) {
-					alert("\"Count\" parameter must base  !");
-					return false;
+					//alert("\"Count\" parameter must base  !");
+					//return false;
 				};
 				this.arrNumList = [];
 				this.arrImgObj = [];

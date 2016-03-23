@@ -7,7 +7,7 @@
 	<hr style="border-color:#428bca" />
 	<ul class="nav nav-sidebar">
 	  <li id="sjrb"><a href="./sjrb">双机热备管理</a></li>
-	  <li id="server"><a href="">服务器管理</a></li>
+	  <li id="servers"><a href="./servers">服务器管理</a></li>
 	  <li id="db"><a href="">数据库管理</a></li>
 	</ul>
 	<hr style="border-color:#428bca" />

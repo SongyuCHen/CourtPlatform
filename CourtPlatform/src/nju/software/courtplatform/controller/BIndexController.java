@@ -150,7 +150,6 @@ public class BIndexController extends BaseController{
 	@ResponseBody
 	public ModelAndView saveWithoutImg(@RequestParam("parent") int parent,@RequestParam("name") String name,@RequestParam("url") String url){
 		ModelAndView mv = new ModelAndView();
-		System.err.println("parent:"+parent+";name:"+name+";url:"+url);
 		TModule tm = new TModule();
 		tm.setC_url(url);
 		tm.setLevels(2);

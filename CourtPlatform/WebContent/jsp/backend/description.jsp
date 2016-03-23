@@ -27,10 +27,11 @@
 						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
 						'insertunorderedlist', '|', 'emoticons', 'link']
 				});
+				editor.html($(".hide_data").html());
 			});
 			</script>
 			<form>
-				<textarea name="content" style="width:700px;height:200px;visibility:hidden;"></textarea>
+				<textarea id="fyjs" name="content" style="width:700px;height:200px;visibility:hidden;"></textarea>
 				<div class="form-group" style="text-align: right;width:700px;padding:15px">
 				<button type="button"  class="btn btn-primary" onclick="save(this)" >保存</button>
 				</div>
@@ -38,6 +39,7 @@
         </div>
      </div>
    </div>
+   <div class="hide_data" style="display:none">${description}</div>
    <%@ include  file="./template/footer.jsp"%>
    <script type="text/javascript">
    $(function(){
@@ -47,6 +49,21 @@
    
    function save(e){
 	   editor.sync();
+	   $.ajax(
+   			{url:"${pageContext.request.contextPath}/backend/bcjs",
+   				type:"post",
+   				dataType:"json",
+   				data:{"js":$("#fyjs").val()},
+   				async:false,
+   				success:function(data){
+   					if(data == true){
+   						revealCall("保存成功！");
+   					}else{
+   						revealCall("保存失败！");
+   					}
+   				}
+   			}); 
+			
 	   //$(".test").html($("[name='content']").val());
 	   //alert($("[name='content']").val());
    }

@@ -46,10 +46,12 @@
 <section class="cd-horizontal-timeline">
 <div class="timeline">
 <div class="events-wrapper">
-	<div class="events">
+	<div class="events" style="width:${(historys.size())*125+100}px">
 		<ol>
-			<li><a href="#0" data-date="16/01/2014" class="selected">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="28/01/2014">1992年<br>10月12日</a></li>
+ 		<c:forEach items="${historys}" var="his" varStatus="status"> 
+			<li><a style="left:${(status.index+1)*120}px" href="#0" data-date="${his.time}" <c:if test="${status.index == 0}">class="selected"</c:if>>${his.time}</a></li>
+		</c:forEach>
+			<!-- <li><a href="#0" data-date="28/01/2014" class="selected">1992年<br>10月12日</a></li>
 			<li><a href="#0" data-date="20/04/2014">1992年<br>10月12日</a></li>
 			<li><a href="#0" data-date="20/05/2014">1992年<br>10月12日</a></li>
 			<li><a href="#0" data-date="09/07/2014">1992年<br>10月12日</a></li>
@@ -58,7 +60,7 @@
 			<li><a href="#0" data-date="01/11/2014">1992年<br>10月12日</a></li>
 			<li><a href="#0" data-date="10/12/2014">1992年<br>10月12日</a></li>
 			<li><a href="#0" data-date="19/01/2015">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="03/03/2015">1992年<br>10月12日</a></li>
+			<li><a href="#0" data-date="03/03/2015">1992年<br>10月12日</a></li> -->
 		</ol>
 
 		<span class="filling-line" aria-hidden="true"></span>
@@ -73,137 +75,19 @@
 
 	<div class="events-content">
 		<ol>
-			<li class="selected" data-date="16/01/2014">
+		<c:forEach items="${historys}" var="his" varStatus="status"> 
+			<li <c:if test="${status.index == 0}">class="selected"</c:if> data-date="${his.time}">
 			<div style="float:left;width:50%">
-				<h2>建院</h2>
-				<em>1992年10月12日</em>
+				<h2>${his.title}</h2>
+				<em>${his.time}</em>
 				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
+					${his.content}
 				</p>
 			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
+				<img src="${pageContext.request.contextPath}/images/history/${his.c_img}" 
+				style="float:left;width:375px;margin-bottom:30px"/>
 			</li>
-
-			<li data-date="28/01/2014">
-				<div style="float:left;width:50%">
-				<h2>建院2</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="20/04/2014">
-				<div style="float:left;width:50%">
-				<h2>建院3</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="20/05/2014">
-				<div style="float:left;width:50%">
-				<h2>建院4</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="09/07/2014">
-				<div style="float:left;width:50%">
-				<h2>建院5</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="30/08/2014">
-				<div style="float:left;width:50%">
-				<h2>建院6</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="15/09/2014">
-				<div style="float:left;width:50%">
-				<h2>建院7</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="01/11/2014">
-				<div style="float:left;width:50%">
-				<h2>建院</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="10/12/2014">
-				<div style="float:left;width:50%">
-				<h2>建院</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="19/01/2015">
-				<div style="float:left;width:50%">
-				<h2>建院</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
-
-			<li data-date="03/03/2015">
-				<div style="float:left;width:50%">
-				<h2>建院</h2>
-				<em>1992年10月12日</em>
-				<p>	
-					啦啦啦，啦啦啦黑猫警长，啦啦啦，啦啦啦黑猫警长，向你致敬向你致敬向你致敬。
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/fy/zhongyuan.png" 
-				style="float:left;width:40%;margin-left:10%"/>
-			</li>
+		</c:forEach>
 		</ol>
 	</div> <!-- .events-content -->
 </section>
