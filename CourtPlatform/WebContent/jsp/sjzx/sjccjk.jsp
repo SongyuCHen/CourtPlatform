@@ -74,7 +74,6 @@
 		<img src="${pageContext.request.contextPath}/images/arrow_left.png" />
 	</div>
 	<div class="btn-bar">
-	
 		<div class="btn-wrapper">
 			<div class="index-btn unhovered" onclick="fold_models()">
 				<div class="text">${menuContext.currentModel.name}</div>
@@ -106,7 +105,7 @@
 		<img src="${pageContext.request.contextPath}/images/board.png" />
 	</div>
 	<script type="text/javascript">
-	function show_sub_system(url,e){
+	function show_sub_system(url,e,level){
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
 		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
@@ -128,6 +127,7 @@
 			}
 			
 		}});
+
 	}
 	var MODEL_COUNT = ${menuContext.subModels.size()};
 	var PER_PAGE = ${sessionScope.per_page};

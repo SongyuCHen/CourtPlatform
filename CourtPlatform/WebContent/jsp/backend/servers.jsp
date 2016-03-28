@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<%@ include  file="./template/head.jsp"%>
 	<link href="${pageContext.request.contextPath}/css/backend/sjrbMan.css" rel="stylesheet">
   </head>
@@ -26,25 +27,28 @@
      			</tr>
      		</thead>
      		<tbody>
-     			<tr id="test">
-      			<td>1</td>
-      			<td>
-      				<p>安定区法院</p>
-      				<input class="form-control"  type="text" value="安定区法院" style="display: none;">
-      			</td>
-      			<td>
-      				<p>155.36.0.2</p>
-      				<input class="form-control"  type="text" value="155.36.0.2" style="display: none;">
-      			</td>
-      			<td>
-      				<p>8080</p>
-      				<input class="form-control"  type="text" value="8080" style="display: none;">
-      			</td>
-      			<td>
-				<button type="button"  class="btn btn-default" onclick="reviseCall(this)" >修改</button>
-				<button type="button"  class="btn btn-default" onclick="save(this)" >保存</button>
-			</td>
-		</tr>
+     		<c:forEach items="${servers}" var="ss" varStatus="status"> 
+     			<tr id="tr${ss.bh }">
+		      			<td>${status.index+1 }</td>
+		      			<td>
+		      				<p id="titleP${ss.bh }">${ss.title }</p>
+		      				<input class="form-control" id="titleInput${ss.bh }"  type="text" value="${ss.title }" style="display: none;">
+		      			</td>
+		      			<td>
+		      				<p id="IPP${ss.bh }">${ss.IP }</p>
+		      				<input class="form-control" id="IPInput${ss.bh }"  type="text" value="${ss.IP }" style="display: none;">
+		      			</td>
+		      			<td>
+		      				<p id="portP${ss.bh }">${ss.port }</p>
+		      				<input class="form-control" id="portInput${ss.bh }" type="text" value="${ss.port }" style="display: none;">
+		      			</td>
+		      			<td>
+							<button type="button"  class="btn btn-default revise revise${ss.bh }" onclick="reviseCall(this)" >修改</button>
+							<button type="button"  class="btn btn-default save save${ss.bh }" onclick="save(this,${ss.bh })" >保存</button>
+							<button type="button"  class="btn btn-default delete delete${ss.bh }" onclick="remove1(this,${ss.bh })" >删除</button>
+						</td>
+				</tr>
+			</c:forEach>
      		</tbody>
      	</table>
      </div>
@@ -53,6 +57,9 @@
 
 
    
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -78,7 +85,7 @@
 				  <div class="form-group">
 				    <label for="inputPassword3" class="col-sm-2 control-label">端口</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="PortInputNew">
+				      <input type="text" class="form-control" id="portInputNew">
 				    </div>
 				  </div>
 			</form>
@@ -91,27 +98,110 @@
     </div>
   </div>
 </div>
-
-
-
-<%@ include  file="./template/footer.jsp"%>
 <script type="text/javascript">
 $(function(){
  $(".sidebar .active").removeClass("active");
  $(".sidebar #servers").addClass("active");
+ $(".revise").show();
+ $(".delete").show();
+ $(".save").hide();
 });
 
 function reviseCall(e){
  var p = $(e).parents("tr");
  $(p).find("input").show();
  $(p).find("p").hide();
+ $(".revise").hide();
+ $(".delete").hide();
+ $(".save").show();
 }
-function save(e){
- var p = $(e).parents("tr");
- $(p).find("input").hide();
- $(p).find("p").show();
+function remove1(e,bh){
+	 //删除信息
+	   $.ajax(
+			{url:"${pageContext.request.contextPath}/backend/deleteserver",
+				type:"post",
+				dataType:"json",
+				data:{
+					"bh":bh
+				},
+				async:false,
+				success:function(data){
+					var result = data.model.status;
+					if(result){
+					   $("#tr"+bh).remove();
+					   revealCall("删除成功！");
+					}else{
+						revealCall("删除失败！");
+					}
+				}
+			});	
 }
+
+function addSub(){
+	 if($("#titleInputNew").val() == "" || $("#IPInputNew").val() == ""
+			|| $("#portInputNew").val() == ""){
+		$(".modal-footer span").html("请将数据填写完整");
+		return;
+		}
+	   //保存信息
+	   $.ajax(
+			{url:"${pageContext.request.contextPath}/backend/saveserver",
+				type:"post",
+				dataType:"json",
+				data:{
+					"title":$("#titleInputNew").val(),
+					"ip":$("#IPInputNew").val(),
+					"port":$("#portInputNew").val()
+				},
+				async:false,
+				success:function(data){
+					revealCall("添加成功！");
+					history.go(0);
+				}
+			});	
+}
+
+function save(e,bh){
+	   
+	   if($("#titleInput"+bh).val() == "" || $("#IPInput"+bh).val() == ""
+			|| $("#portInput"+bh).val() == ""){
+		revealCall("请填写完整！");
+		return;
+	}
+	   $.ajax({
+		   url:"${pageContext.request.contextPath}/backend/reviseserver",
+		   type:"post",
+		   dataType:"json",
+		   data:{
+			   "bh":bh,
+			   "title":$("#titleInput"+bh).val(),
+				"ip":$("#IPInput"+bh).val(),
+				"port":$("#portInput"+bh).val()
+		   },
+		   async:false,
+				success:function(data){
+					var result = data.model.status;
+					if(result){
+						$("#titleP"+bh).html($("#titleInput"+bh).val());
+						$("#IPP"+bh).html($("#IPInput"+bh).val());
+						$("#portP"+bh).html($("#portInput"+bh).val());
+						 var p = $(e).parents("tr");
+						 $(p).find("input").hide();
+						 $(p).find("p").show();
+						 $(".revise").show();
+						 $(".delete").show();
+						 $(".save").hide();
+					   revealCall("保存成功！");
+					}else{
+						revealCall("保存失败！");
+					}
+				}
+		   
+	   });
+}	   
 </script>
+
+<%@ include  file="./template/footer.jsp"%>
 </body>
 </html>
 </html>

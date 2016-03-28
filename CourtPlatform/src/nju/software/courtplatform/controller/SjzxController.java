@@ -2,6 +2,7 @@ package nju.software.courtplatform.controller;
 
 import nju.software.courtplatform.service.MachineService;
 import nju.software.courtplatform.service.MenuService;
+import nju.software.courtplatform.service.ServerService;
 
 import org.hyperic.sigar.SigarException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class SjzxController extends BaseController{
 	private MenuService ms;
 	@Autowired
 	private MachineService mas;
+	@Autowired
+	private ServerService ss;
 	
 	@RequestMapping(value = "/sjzx/index")
 	public ModelAndView getPage(){
@@ -51,7 +54,16 @@ public class SjzxController extends BaseController{
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("sjzx/fwqyxjk");
 		mv.addObject("menuContext", ms.getMenuContext("/sjzx/index"));
+		mv.addObject("servers",ss.getServerInfos());
 		//mv.addObject("machine",mas.getMechineState("localhost"));
+		return mv;
+	}
+	
+	@RequestMapping(value=" /sjzx/sjbf/fwqdata",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView getFWQYXJKData(String url) throws SigarException{
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("machine",mas.getMechineState("localhost"));
 		return mv;
 	}
 	 

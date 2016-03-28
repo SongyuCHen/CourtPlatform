@@ -78,27 +78,31 @@
 			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
-			for(var o in models){
-				if(o%6 == 0){
-					 line = document.createElement("div");
-					 $(line).attr("class","icon-line") ;
-					 $(".icon-container").append(line);
+			if(models.length != 0){
+				for(var o in models){
+					if(o%6 == 0){
+						 line = document.createElement("div");
+						 $(line).attr("class","icon-line") ;
+						 $(".icon-container").append(line);
+					}
+					$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+					$(".icon").click(function(){
+						window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
+						/* $.ajax({url:"${pageContext.request.contextPath}/sjzx"+"/business",data:{"url":url},type:"post",dataType:"html",async:false,success:function(data){
+							$(".icon-container").empty();
+							$(".icon-container").append(data);
+						}}); */
+					});
 				}
-				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
-				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
-					/* $.ajax({url:"${pageContext.request.contextPath}/sjzx"+"/business",data:{"url":url},type:"post",dataType:"html",async:false,success:function(data){
-						$(".icon-container").empty();
-						$(".icon-container").append(data);
-					}}); */
-				});
+			} else{
+				window.location.href="${pageContext.request.contextPath}/"+url;
 			}
 			
 		}});
 	}
-	$(function(){
-		$(".btn-bar .sbtn:first").click();
-	});
+/* 	$(function(){
+		$(".btn-bar .sbtn:last").click();
+	}); */
 	var MODEL_COUNT = ${menuContext.subModels.size()};
 	var PER_PAGE = ${sessionScope.per_page};
 	var page_count = MODEL_COUNT%PER_PAGE == 0 ? MODEL_COUNT/PER_PAGE : (MODEL_COUNT/PER_PAGE+1);

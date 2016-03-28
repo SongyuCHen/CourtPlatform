@@ -28,6 +28,9 @@
 	background-color: #eee;
 	cursor: pointer;
 }
+.icon-container .left-col .nav{
+	background-color: #eee;
+}
 .icon-container .right-col>table{
 	width:95%;
 	margin:5px 2%;

@@ -5,9 +5,7 @@ import nju.software.courtplatform.help.CPUInfo;
 import nju.software.courtplatform.help.FileSystemInfo;
 import nju.software.courtplatform.help.MechineState;
 import nju.software.courtplatform.help.MemoryInfo;
-import nju.software.courtplatform.help.MenuContext;
 import nju.software.courtplatform.help.SystemInfo;
-import nju.software.courtplatform.model.TModule;
 
 import java.util.ArrayList;
 

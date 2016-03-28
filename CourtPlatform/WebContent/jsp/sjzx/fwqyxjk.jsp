@@ -28,16 +28,9 @@
 <div class="icon-container">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/sjzx/fwqyxjk.css" />
 	<div class="left-col">
-		<p>服务器1</p>
-		<p>服务器2</p>
-		<p>服务器3</p>
-		<p>服务器4</p>
-		<p>服务器5</p>
-		<p>服务器6</p>
-		<p>服务器7</p>
-		<p>服务器8</p>
-		<p>服务器9</p>
-		<p>服务器10</p>
+	<c:forEach items="${servers}" var="ss" varStatus="status">
+		<p data-url="${ss.IP }:${ss.port}">${ss.title }</p>	
+	</c:forEach>
 	</div>
 	<div class="right-col">
 		<table cellpadding="0" cellspacing="0">
@@ -45,32 +38,32 @@
 				<td>
 					<h3>系统</h3>
 					<div>
-					<p>系统名称：${machine.systemInfo.getName()}</p>
-					<p>系统版本：${machine.systemInfo.getVersion()}</p>
-					<p>系统类型：${machine.systemInfo.getArch()}</p>
+					<p id="sysName">系统名称：${machine.systemInfo.getName()}</p>
+					<p id="sysVer">系统版本：${machine.systemInfo.getVersion()}</p>
+					<p id="sysArch">系统类型：${machine.systemInfo.getArch()}</p>
 					</div>
 				</td>
 				<td>
 					<h3>内存使用</h3>
 					<div>
-					<p>内存总量：${machine.memoryInfo.getMemTotal()}</p>
-					<p>已使用量：${machine.memoryInfo.getMemUsed()}</p>
-					<p>未使用量：${machine.memoryInfo.getMemNotUsed()}</p>
+					<p id="memTotal">内存总量：${machine.memoryInfo.getMemTotal()}</p>
+					<p id="memUsed">已使用量：${machine.memoryInfo.getMemUsed()}</p>
+					<p id="memFree">未使用量：${machine.memoryInfo.getMemNotUsed()}</p>
 					</div>
 				</td>
 				<td>
 					<h3>CPU</h3>
 					<div>
-					<p>核心数量：${machine.cpuInfo.getCPUnum()}</p>
-					<p>CPU类型：${machine.cpuInfo.getVender()} ${machine.cpuInfo.getModel()}(${machine.cpuInfo.getRate()})</p>
-					<p>CPU缓存：${machine.cpuInfo.getCache()}</p>
+					<p id="cpuNum">核心数量：${machine.cpuInfo.getCPUnum()}</p>
+					<p id="cpuType">CPU类型：${machine.cpuInfo.getVender()} ${machine.cpuInfo.getModel()}(${machine.cpuInfo.getRate()})</p>
+					<p id="cpuCache">CPU缓存：${machine.cpuInfo.getCache()}</p>
 					</div>
 				</td>
 			</tr>
 				
 			<tr>
 				
-				<td colspan="3">
+				<td colspan="3" id="disks">
 					<h3>硬盘使用</h3>
 					<c:forEach items="${machine.fileSystems}" var="fs" varStatus="status"> 
 						<div class="fs" style="float:left">
@@ -136,19 +129,22 @@
 			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
-			for(var o in models){
-				if(o%6 == 0){
-					 line = document.createElement("div");
-					 $(line).attr("class","icon-line") ;
-					 $(".icon-container").empty();
-					 $(".icon-container").append(line);
+			if(models.length != 0){
+				for(var o in models){
+					if(o%6 == 0){
+						 line = document.createElement("div");
+						 $(line).attr("class","icon-line") ;
+						 $(".icon-container").empty();
+						 $(".icon-container").append(line);
+					}
+					$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+					$(".icon").click(function(){
+						window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
+					});
 				}
-				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
-				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
-				});
+			}else{
+				window.location.href="${pageContext.request.contextPath}/"+url;
 			}
-			
 		}});
 	}
 	var MODEL_COUNT = ${menuContext.subModels.size()};
@@ -199,6 +195,41 @@
 			isFold = 0;
 		}
 	}
+	
+	$(function(){
+		$(".left-col p").click(function(e){
+			$(".nav").attr("class","");
+			$(this).attr("class","nav");
+			$.ajax({
+				url:"http://"+$(this).data("url")+"/CourtPlatform/sjzx/sjbf/fwqdata",
+				type:"get",
+				dataType:"JSON",
+				async:false,
+				success:function(data){
+					var info = data.model.machine;
+					$("#sysName").html("系统名称："+info.systemInfo.name);
+					$("#sysVer").html("系统版本："+info.systemInfo.version);
+					$("#sysArch").html("系统类型："+info.systemInfo.arch);
+					$("#memTotal").html("内存总量："+info.memoryInfo.memTotal);
+					$("#memUsed").html("已使用量："+info.memoryInfo.memUsed);
+					$("#memFree").html("未使用量："+info.memoryInfo.memNotUsed);
+					$("#cpuNum").html("核心数量："+info.cpuInfo.cpunum);
+					$("#cpuType").html("CPU类型："+info.cpuInfo.vender+" "+info.cpuInfo.model+"("+info.cpuInfo.rate+")");
+					$("#cpuCache").html("CPU缓存："+info.cpuInfo.cache);
+					$("#disks").empty();
+					$("#disks").html("<h3>硬盘使用</h3>");
+					var i = info.fileSystems;
+					for(var o in i){
+				 		$("#disks").append("<div class=\"fs\" style=\"float:left\"><p>盘符名称："+i[o].name+
+								"</p><p>硬盘容量："+i[o].total+
+								"</p><p>已使用量："+i[o].used+
+								"</p><p>已使用率："+i[o].percent+"</p></div>");
+					}
+				}
+			});
+		});
+		$(".left-col p:first").click();
+	})
 	</script>
 </body>
 </html>
