@@ -124,13 +124,15 @@
 	function show_sub_system(url,e){
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
+		
 		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
 			$(".icon-line").remove();
 			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
+			if(models.length != 0){
 			for(var o in models){
-				if(o%6 == 0){
+				if(o%5 == 0){
 					 line = document.createElement("div");
 					 $(line).attr("class","icon-line") ;
 					 $(".icon-container").append(line);
@@ -144,6 +146,10 @@
 					}}); */
 				});
 			}
+			}else{
+				window.location.href="${pageContext.request.contextPath}"+url;
+			}
+			
 			
 		}});
 	}

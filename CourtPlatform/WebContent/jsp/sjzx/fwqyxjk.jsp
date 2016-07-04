@@ -29,7 +29,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/sjzx/fwqyxjk.css" />
 	<div class="left-col">
 	<c:forEach items="${servers}" var="ss" varStatus="status">
-		<p data-url="${ss.IP }:${ss.port}">${ss.title }</p>	
+		<p data-bh="${ss.bh}">${ss.title }</p>	
 	</c:forEach>
 	</div>
 	<div class="right-col">
@@ -38,7 +38,7 @@
 				<td>
 					<h3>系统</h3>
 					<div>
-					<p id="sysName">系统名称：${machine.systemInfo.getName()}</p>
+					<p id="sysName">系统名称：${machine.systemInfo.getSysname()}</p>
 					<p id="sysVer">系统版本：${machine.systemInfo.getVersion()}</p>
 					<p id="sysArch">系统类型：${machine.systemInfo.getArch()}</p>
 					</div>
@@ -46,17 +46,17 @@
 				<td>
 					<h3>内存使用</h3>
 					<div>
-					<p id="memTotal">内存总量：${machine.memoryInfo.getMemTotal()}</p>
-					<p id="memUsed">已使用量：${machine.memoryInfo.getMemUsed()}</p>
-					<p id="memFree">未使用量：${machine.memoryInfo.getMemNotUsed()}</p>
+					<p id="memTotal">内存总量：${machine.memoryInfo.getTotal()}</p>
+					<p id="memUsed">已使用量：${machine.memoryInfo.getUsed()}</p>
+					<p id="memFree">已使用率：${machine.memoryInfo.getPercent()}</p>
 					</div>
 				</td>
 				<td>
 					<h3>CPU</h3>
 					<div>
-					<p id="cpuNum">核心数量：${machine.cpuInfo.getCPUnum()}</p>
+					<p id="cpuNum">核心数量：${machine.cpuInfo.getCpunum()}</p>
 					<p id="cpuType">CPU类型：${machine.cpuInfo.getVender()} ${machine.cpuInfo.getModel()}(${machine.cpuInfo.getRate()})</p>
-					<p id="cpuCache">CPU缓存：${machine.cpuInfo.getCache()}</p>
+					<p id="cpuCache">CPU缓存：${machine.cpuInfo.getCachesize()}</p>
 					</div>
 				</td>
 			</tr>
@@ -65,14 +65,16 @@
 				
 				<td colspan="3" id="disks">
 					<h3>硬盘使用</h3>
+					<div>
 					<c:forEach items="${machine.fileSystems}" var="fs" varStatus="status"> 
-						<div class="fs" style="float:left">
-							<p>盘符名称：${fs.getName()}</p>
+						<div class="fs" style="float:left;margin-top:10px">
+							<p>盘符名称：${fs.getDevname()}</p>
 							<p>硬盘容量：${fs.getTotal()}</p>
 							<p>已使用量：${fs.getUsed()}</p>
 							<p>已使用率：${fs.getPercent()}</p>
 						</div>
 					</c:forEach>
+					</div>
 				</td>
 			</tr>
 		</table>
@@ -131,7 +133,7 @@
 			var models = data.modelMap.menuContext.subModels;
 			if(models.length != 0){
 				for(var o in models){
-					if(o%6 == 0){
+					if(o%5 == 0){
 						 line = document.createElement("div");
 						 $(line).attr("class","icon-line") ;
 						 $(".icon-container").empty();
@@ -143,7 +145,7 @@
 					});
 				}
 			}else{
-				window.location.href="${pageContext.request.contextPath}/"+url;
+				window.location.href="${pageContext.request.contextPath}"+url;
 			}
 		}});
 	}
@@ -201,29 +203,30 @@
 			$(".nav").attr("class","");
 			$(this).attr("class","nav");
 			$.ajax({
-				url:"http://"+$(this).data("url")+"/CourtPlatform/sjzx/sjbf/fwqdata",
-				type:"get",
+				url:"${pageContext.request.contextPath}/sjzx/fwqdata",
+				type:"post",
 				dataType:"JSON",
 				async:false,
+				data:{"bh":$(this).data("bh")},
 				success:function(data){
 					var info = data.model.machine;
-					$("#sysName").html("系统名称："+info.systemInfo.name);
+					$("#sysName").html("系统名称："+info.systemInfo.sysname);
 					$("#sysVer").html("系统版本："+info.systemInfo.version);
 					$("#sysArch").html("系统类型："+info.systemInfo.arch);
-					$("#memTotal").html("内存总量："+info.memoryInfo.memTotal);
-					$("#memUsed").html("已使用量："+info.memoryInfo.memUsed);
-					$("#memFree").html("未使用量："+info.memoryInfo.memNotUsed);
+					$("#memTotal").html("内存总量："+info.memoryInfo.total);
+					$("#memUsed").html("已使用量："+info.memoryInfo.used);
+					$("#memFree").html("已使用率："+info.memoryInfo.percent);
 					$("#cpuNum").html("核心数量："+info.cpuInfo.cpunum);
 					$("#cpuType").html("CPU类型："+info.cpuInfo.vender+" "+info.cpuInfo.model+"("+info.cpuInfo.rate+")");
-					$("#cpuCache").html("CPU缓存："+info.cpuInfo.cache);
+					$("#cpuCache").html("CPU缓存："+info.cpuInfo.cachesize);
 					$("#disks").empty();
-					$("#disks").html("<h3>硬盘使用</h3>");
+					$("#disks").html("<h3>硬盘使用</h3><p class='devuse'></p>");
 					var i = info.fileSystems;
 					for(var o in i){
-				 		$("#disks").append("<div class=\"fs\" style=\"float:left\"><p>盘符名称："+i[o].name+
+				 		$(".devuse").append("<div class=\"fs\" style=\"float:left;margin-right:10px;margin-top:10px\"><p>盘符名称："+i[o].devname+
 								"</p><p>硬盘容量："+i[o].total+
 								"</p><p>已使用量："+i[o].used+
-								"</p><p>已使用率："+i[o].percent+"</p></div>");
+								"</p><p>已使用率："+i[o].percent.substr(0,i[o].percent.indexOf(".")+3)+"%</p></div>");
 					}
 				}
 			});

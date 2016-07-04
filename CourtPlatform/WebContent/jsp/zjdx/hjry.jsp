@@ -30,7 +30,7 @@
 a,img{border:0;}
 body{font:12px/180% Arial, Helvetica, sans-serif,"新宋体"; background-color:#2A2A2A}
 /* focus_Box */
-#focus_Box{position:relative;width:980px;height:308px;margin:20px auto;}
+#focus_Box{position:relative;width:800px;height:308px;margin:20px auto;}
 #focus_Box ul{position:relative;width:710px;height:308px;margin-left:30px}
 #focus_Box li{z-index:0;position:absolute; width:0px;background:#787878;height:0px;top:146px;cursor:pointer;left:377px;border-radius:4px;}
 #focus_Box li img{width:100%;background:url(${pageContext.request.contextPath}/lib/picshow3/images/loading.gif) no-repeat center 50%;height:100%;vertical-align:top}
@@ -57,7 +57,7 @@ body{font:12px/180% Arial, Helvetica, sans-serif,"新宋体"; background-color:#
 	<ul>
 	<c:forEach items="${awards}" var="as" varStatus="status"> 
 		<li>
-			<a href="#"><img width="600" height="450" alt="Photo sharing jq22" src="${pageContext.request.contextPath}/images/award/${as.c_img}" /></a>
+			<a href="#"><img width="500" height="450" alt="Photo sharing jq22" src="${pageContext.request.contextPath}/images/award/${as.c_img}" /></a>
 			<p>
 				<span>${as.title}</span>
 			</p>
@@ -104,5 +104,88 @@ body{font:12px/180% Arial, Helvetica, sans-serif,"新宋体"; background-color:#
 	<div class="board">
 		<img src="${pageContext.request.contextPath}/images/board.png" />
 	</div>
+	
+	<script type="text/javascript">
+	function show_sub_system(url,e){
+		$(".active").attr("class","sbtn unhovered");
+		$(e).attr("class",$(e).attr("class")+" active");
+		$.ajax({url:"${pageContext.request.contextPath}/zjdx"+"/business",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
+			/* $(".icon-container").empty();
+			$(".icon-container").append(data); */
+			$(".icon-line").remove();
+			$(".icon-container").empty();
+			var line;
+			var models = data.modelMap.menuContext.subModels;
+			for(var o in models){
+				if(o%5 == 0){
+					 line = document.createElement("div");
+					 $(line).attr("class","icon-line") ;
+					 $(".icon-container").empty();
+					 $(".icon-container").append(line);
+				}
+				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+				$(".icon").click(function(){
+					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
+				});
+			}
+		}});
+	}
+	$(function(){
+		//$(".btn-bar .sbtn:first").click();
+		/* var i = 0;
+		$(".sbtn-wrapper").each(function(){
+			$(this).css("left",465+200*i+"px");
+			i++;
+		}); */
+	});
+	var MODEL_COUNT = ${menuContext.subModels.size()};
+	var PER_PAGE = ${sessionScope.per_page};
+	var page_count = MODEL_COUNT%PER_PAGE == 0 ? MODEL_COUNT/PER_PAGE : (MODEL_COUNT/PER_PAGE+1);
+	var cur_page = 0;
+	$(".sbtn-group").css("width",200*PER_PAGE+"px");
+	$("[data-page='"+cur_page+".0'] .sbtn-wrapper").animate({
+		marginLeft:"0px"
+	});
+	isFold = 0;
+	function scroll_left(){
+		if(cur_page > 0 && !isFold){
+			$(".sbtn-group").animate({
+				marginLeft:"+="+200*PER_PAGE+"px"
+			}); 
+			cur_page--;
+			for(var j = cur_page ; j < page_count ; j++){
+				$("[data-page='"+j+".0']").css("margin-left","0");
+			}
+		}
+	}
+	function scroll_right(){
+		if(cur_page < parseInt(page_count-1) && !isFold){
+			var i = cur_page;
+			for(var j = cur_page ; j>=0 ; j--){
+				$("[data-page='"+j+".0']").animate({
+					marginLeft:"-="+200*PER_PAGE+"px"
+				}); 
+			}
+			cur_page++;
+			for(var j = cur_page ; j < page_count ; j++){
+				$("[data-page='"+j+".0']").css("margin-left","0");
+			}
+		}
+	}
+	var isFold = 0;
+	function fold_models(){
+		if(!isFold){
+			$("[data-page='"+cur_page+".0'] .sbtn-wrapper").animate({
+				marginLeft:"-="+200*PER_PAGE+"px"
+			}); 
+			isFold = 1;
+		}else{
+			$("[data-page='"+cur_page+".0'] .sbtn-wrapper").animate({
+				marginLeft:"0px"
+			});
+			isFold = 0;
+		}
+	}
+	</script>
 </body>
 </html>

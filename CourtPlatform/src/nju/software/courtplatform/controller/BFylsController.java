@@ -112,6 +112,7 @@ public class BFylsController extends BaseController{
 		Map<String,Object> resMap = new HashMap<String,Object>();
 		System.err.println("bh:"+bh);
 		String name = upload1.getOriginalFilename();
+		System.err.println("bh:"+name);
 		if (upload1 != null) {
 			//获取保存的路径，
 			String realPath = request.getSession().getServletContext()

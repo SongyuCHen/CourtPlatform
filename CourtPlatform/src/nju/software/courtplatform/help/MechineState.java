@@ -1,13 +1,19 @@
 package nju.software.courtplatform.help;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import nju.software.courtplatform.model.CPUInfo;
+import nju.software.courtplatform.model.FileSystem;
+import nju.software.courtplatform.model.MemoryInfo;
+import nju.software.courtplatform.model.SystemInfo;
 
 
 public class MechineState {
 	private CPUInfo cpuInfo;
 	private MemoryInfo memoryInfo;
 	private SystemInfo systemInfo;
-	private ArrayList<FileSystemInfo> fileSystems = new ArrayList<FileSystemInfo>();
+	private List<FileSystem> fileSystems;
 	public CPUInfo getCpuInfo() {
 		return cpuInfo;
 	}
@@ -26,10 +32,10 @@ public class MechineState {
 	public void setSystemInfo(SystemInfo systemInfo) {
 		this.systemInfo = systemInfo;
 	}
-	public ArrayList<FileSystemInfo> getFileSystems() {
+	public List<FileSystem> getFileSystems() {
 		return fileSystems;
 	}
-	public void setFileSystems(ArrayList<FileSystemInfo> fileSystems) {
+	public void setFileSystems(List<FileSystem> fileSystems) {
 		this.fileSystems = fileSystems;
 	}
 }

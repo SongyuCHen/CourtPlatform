@@ -22,49 +22,74 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/app/business.js"></script>
 <title>业务应用系统</title>
+<style type="text/css">
+.kjft{
+	float:left;
+	background-image: url(${pageContext.request.contextPath}/images/kjft-bg.png);
+	width: 200px;
+    height: 200px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.icon-container{
+    padding-left: 25px;
+}
+.kjft-title{
+	color: white;
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+}
+.fy{
+	margin-top: 5px;
+    margin-left: 20px;
+    font-weight: 900;
+    line-height: 1.5em;}
+.fy img{
+width:16px;
+margin-right:10px}
+.tip{
+	position: relative;
+    left: -50px;
+    top: 40px;
+    width: 12px;
+}
+</style>
 </head>
 <body>
 <div class="back" style="width:500px;height:100px;float:left">
 	<a href="${pageContext.request.contextPath}/index" style="width:500px;height:100px;display: inline-block"></a>
 </div>
 	<div class="icon-container">
-		<%-- <div class="icon-line">
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
+		<div style="float:left;">
+			<img alt="" src="${pageContext.request.contextPath}/images/big_map.png" style="width: 270px;height:400px;margin-top:20px;margin-left: -10px;float:left">	
+			<%-- <img class="tip" alt="" src="${pageContext.request.contextPath}/images/tip.png">
+			<img class="tip" alt="" src="${pageContext.request.contextPath}/images/tip.png">
+			<img class="tip" alt="" src="${pageContext.request.contextPath}/images/tip.png">
+			<img class="tip" alt="" src="${pageContext.request.contextPath}/images/tip.png">
+			<img class="tip" alt="" src="${pageContext.request.contextPath}/images/tip.png">
+			<img class="tip" alt="" src="${pageContext.request.contextPath}/images/tip.png"> --%>
 		</div>
-		<div class="icon-line">
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
+		<div style="float:left;width:240px;height:380px;margin-left:20px;background-size:100% 100%;background-repeat:no-repeat;background-image: url(${pageContext.request.contextPath}/images/fy-list.png);">
+			<div class="fy" style="margin-top:60px"><img alt="" src="${pageContext.request.contextPath}/images/kjft-file.png"><span>定西市中级人民法院</span></div>
+			<div class="fy"><img alt="" src="${pageContext.request.contextPath}/images/kjft-file.png"><span>安定区人民法院</span></div>
+			<div class="fy"><img alt="" src="${pageContext.request.contextPath}/images/kjft-file.png"><span>通渭县人民法院</span></div>
+			<div class="fy"><img alt="" src="${pageContext.request.contextPath}/images/kjft-file.png"><span>渭源县人民法院</span></div>
+			<div class="fy"><img alt="" src="${pageContext.request.contextPath}/images/kjft-file.png"><span>临洮县人民法院</span></div>
+		</div>
+		<div style="margin-left:20px">
+			<div class="kjft">
+				<div class="kjft-title">第一科技法庭</div>
+				<div>
+					<img alt="" src="${pageContext.request.contextPath}/images/kjft-test.png" width="190" style="padding:10px 5px">
+				</div>
 			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-			<div class="icon">
-				<img src="${pageContext.request.contextPath}/images/icon/fyxt.png"/>
-			</div>
-		</div> --%>
+			<div class="kjft"></div>
+			<div class="kjft"></div>
+			<div class="kjft"></div>
+		</div>
 	</div>
 
 
@@ -113,7 +138,7 @@
 		$(".active").attr("class","sbtn unhovered");
 		$(e).attr("class",$(e).attr("class")+" active");
 		$.ajax({url:"${pageContext.request.contextPath}/app"+"/subsys",data:{"url":url},type:"post",dataType:"json",async:false,success:function(data){
-			$(".icon-line").remove();
+			/* $(".icon-line").remove();
 			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
@@ -124,7 +149,7 @@
 					 $(".icon-container").append(line);
 				}
 				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
-			}
+			} */
 			
 		}});
 	}
@@ -184,6 +209,62 @@
 			isFold = 0;
 		}
 	}
+	
+	var pos = {"dx":{
+					"0":{"left":"-160","top":"40"},
+					"1":{"left":"-160","top":"60"},
+					"2":{"left":"-220","top":"40"},
+					"3":{"left":"-220","top":"70"},
+					"4":{"left":"-200","top":"100"},
+					"5":{"left":"-280","top":"100"},
+					"6":{"left":"-240","top":"120"},
+					"7":{"left":"-230","top":"110"},
+					"8":{"left":"-300","top":"100"},
+					"9":{"left":"-320","top":"130"}
+				},
+				"lt":{
+					"0":{"left":"-350","top":"40"},
+					"1":{"left":"-390","top":"130"},
+					"2":{"left":"-370","top":"150"},
+					"3":{"left":"-330","top":"70"},
+					"4":{"left":"-340","top":"100"}
+				},
+				"wy":{
+					"0":{"left":"-300","top":"200"},
+					"1":{"left":"-390","top":"180"},
+					"2":{"left":"-300","top":"150"},
+					"3":{"left":"-330","top":"200"},
+					"4":{"left":"-280","top":"170"}
+				},
+				"lx":{
+					"0":{"left":"-230","top":"200"},
+					"1":{"left":"-320","top":"180"},
+					"2":{"left":"-230","top":"150"},
+					"3":{"left":"-260","top":"200"},
+					"4":{"left":"-210","top":"170"}
+				},
+				"tw":{
+					"0":{"left":"-130","top":"200"},
+					"1":{"left":"-220","top":"180"},
+					"2":{"left":"-220","top":"150"},
+					"3":{"left":"-210","top":"170"},
+					"4":{"left":"-110","top":"170"}
+				},
+				"zx":{
+					"0":{"left":"-310","top":"230"},
+					"1":{"left":"-230","top":"260"},
+					"2":{"left":"-290","top":"240"},
+					"3":{"left":"-360","top":"270"},
+					"4":{"left":"-240","top":"300"}
+				},
+				"mx":{
+					"0":{"left":"-290","top":"300"},
+					"1":{"left":"-370","top":"340"},
+					"2":{"left":"-400","top":"270"},
+					"3":{"left":"-230","top":"310"},
+					"4":{"left":"-240","top":"340"}
+				}
+			};
 	</script>
 </body>
 </html>

@@ -12,7 +12,7 @@ function toSPJK(){
 	window.location.href="./spjk/index";
 }
 function toSJZX(){
-	window.location.href="./sjzx/index";
+	window.location.href="./sjzx/sjbf/sjccjk";
 }
 function toZJDX(){
 	window.location.href="./zjdx/index";

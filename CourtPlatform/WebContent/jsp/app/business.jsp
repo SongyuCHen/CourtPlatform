@@ -117,12 +117,12 @@
 			var line;
 			var models = data.modelMap.menuContext.subModels;
 			for(var o in models){
-				if(o%6 == 0){
+				if(o%5 == 0){
 					 line = document.createElement("div");
 					 $(line).attr("class","icon-line") ;
 					 $(".icon-container").append(line);
 				}
-				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+				$(line).append("<div class=\"icon\" onclick=\"window.location.href='"+models[o].c_url+"'\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
 			}
 			
 		}});
@@ -183,6 +183,8 @@
 			isFold = 0;
 		}
 	}
+	
+	
 	</script>
 </body>
 </html>

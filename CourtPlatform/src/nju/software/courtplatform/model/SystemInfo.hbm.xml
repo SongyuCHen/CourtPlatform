@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-3-2 17:43:59 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="nju.software.courtplatform.model.SystemInfo" table="T_SYSTEMINFO" schema="dbo" catalog="JUDGE">
+        <cache usage="read-write" />
+        <id name="bh" type="int">
+            <column name="BH" />
+            <generator class="assigned" />
+        </id>
+        <property name="serverbh" type="java.lang.Integer">
+            <column name="SERVERBH" />
+        </property>
+        <property name="arch" type="java.lang.String">
+            <column name="ARCH" />
+        </property>
+        <property name="sysname" type="java.lang.String">
+            <column name="SYSNAME" />
+        </property>
+        <property name="vender" type="java.lang.String">
+            <column name="VENDER" />
+        </property>
+        <property name="version" type="java.lang.String">
+            <column name="VERSION" />
+        </property>
+    </class>
+</hibernate-mapping>

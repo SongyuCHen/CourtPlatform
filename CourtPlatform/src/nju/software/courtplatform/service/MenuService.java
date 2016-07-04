@@ -26,6 +26,10 @@ public class MenuService extends BaseService{
 		return mc;
 	}
 	
+	public TModule geTModuleByBh(int bh){
+		return md.getByBH(bh);
+	}
+	
 	public MenuContext getMenuContext(){
 		MenuContext mc = new MenuContext();
 		//TModule curModule = md.getAllTModule();

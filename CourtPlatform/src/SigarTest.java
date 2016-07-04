@@ -1,194 +1,79 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-
-import org.codehaus.jackson.util.BufferRecycler;
-import org.hyperic.sigar.CpuInfo;
-import org.hyperic.sigar.FileSystem;
-import org.hyperic.sigar.FileSystemUsage;
-import org.hyperic.sigar.Mem;
-import org.hyperic.sigar.OperatingSystem;
-import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarException;
-
-import com.sun.org.apache.regexp.internal.recompile;
-
-public class SigarTest {
-	private String DATABASE_DIR = "./";
-	
-	@SuppressWarnings("unchecked")
-	public boolean  dataBaseUp(String basePath,String dataBaseSavePath,long currentTime,String databaseName) throws IOException
-	{
-		
-		File inputFile = createFileOnServer(basePath,new String[]{DATABASE_DIR},"InputFile-"+currentTime+".txt");
-		File outFile = createFileOnServer(basePath,new String[]{DATABASE_DIR},"OutFile-"+currentTime+".txt");	
-//		FileOnTemplateV fileOnTemplateV = new FileOnTemplateV();
-//		fileOnTemplateV.generatorFileBaseOnTemplate("dataBaseDump.vm",new String[]{"databaseName","databaseSavePath"},new Object[]{databaseName.trim(),dataBaseSavePath.trim()}, inputFile);
-		
-		// 拼出可以执行的命令
-		//备份
-//		isql -Usa -P -Sfyrs-server
-//		go
-//		use master  文件命令从这里开始
-//		go
-//		dump database FYRS TO 'D:\fyrsSpringWorkspace\2014-10-22\tools\apache-tomcat-7.0.53\backup\fyrs20141027.dmp'
-//		go
-		Process process = Runtime.getRuntime().exec("cmd /c isql -Usa -P  -Sfyrs-server -D"+databaseName.trim()+"  -i"+inputFile.toString()+"  -o"+outFile.toString());
-		try
-		{
-			process.waitFor();
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-		FileReader fr = new FileReader(outFile);
-		BufferedReader br = new BufferedReader(fr);
-		boolean c;
-		do{
-			String s = br.readLine();
-			System.out.println(s);
-		}while(c = br.read()!=-1);
-
-//		List<String> lines = FileUtils.readLines(outFile);
-//		for(String line : lines)
-//		{
-//			if(line.contains("DUMP is complete"))
-//			{
-//				return true;
-//			}
+//import java.io.BufferedReader;
+//import java.io.File;
+//import java.io.FileReader;
+//import java.io.IOException;
+//import java.net.InetAddress;
+//import java.sql.CallableStatement;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Statement;
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.aspectj.weaver.ast.Call;
+//import org.codehaus.jackson.util.BufferRecycler;
+//import org.hyperic.sigar.CpuInfo;
+//import org.hyperic.sigar.FileSystem;
+//import org.hyperic.sigar.FileSystemUsage;
+//import org.hyperic.sigar.Mem;
+//import org.hyperic.sigar.OperatingSystem;
+//import org.hyperic.sigar.Sigar;
+//import org.hyperic.sigar.SigarException;
+//import org.hyperic.sigar.cmd.Ps;
+//
+//import com.sun.crypto.provider.RSACipher;
+//import com.sun.org.apache.regexp.internal.recompile;
+//
+//import nju.software.courtplatform.help.CPUInfo;
+//import nju.software.courtplatform.help.FileSystemInfo;
+//import nju.software.courtplatform.help.MechineState;
+//import nju.software.courtplatform.help.MemoryInfo;
+//import nju.software.courtplatform.help.SystemInfo;
+//
+//public class SigarTest {
+//
+//
+//	public static void main(String[] args) throws SigarException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+//		// TODO Auto-generated method stub
+//		InetAddress ia=null;
+//		String localname=null;
+//		String localip = null;
+//		try {
+//			ia=ia.getLocalHost();			
+//			localname=ia.getHostName();
+//			localip=ia.getHostAddress();
+//			System.out.println("本机名称是："+ localname);
+//			System.out.println("本机的ip是 ："+localip);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
-		//deleteFile(inputFile);
-		//deleteFile(outFile);
-		return false;
-	}
-	public static File createFileOnServer(String basepath,String[] directory,String fileName) throws IOException
-	{
-		StringBuilder sb = new StringBuilder();
-		File file = null;
-		if(null == directory)
-		{
-			sb.append(basepath).append(File.separator).append(fileName);
-			file = new File(sb.toString());
-			if(!file.exists())
-			{
-				file.createNewFile();
-			}
-			return file;
-		}
-		else
-		{
-			sb.append(basepath);
-			for(int i = 0; i < directory.length; i++)
-			{
-				sb.append(File.separator).append(directory[i]);
-			}
-			file = new File(sb.toString());
-			if(!file.exists())
-			{
-				file.mkdirs();
-			}
-			File newFile = new File(file,fileName);
-			if(!newFile.exists())
-			{
-				newFile.createNewFile();
-			}
-			return newFile;
-		}
-		
-	}
-
-	public static void main(String[] args) throws SigarException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		   //Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();//通过jdbc方式连接  
-	    Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();//通过jtds方式连接  
-	      
-	    //String url ="jdbc:sybase:Tds:192.168.102.100:5000/test";//通过jdbc方式连接,test为数据库名  
-	    String url ="jdbc:jtds:sybase://155.36.0.104:5000/";//通过jtds方式连接，test为数据库名  
-	      
-	    Connection conn= DriverManager.getConnection(url, "sa","");  
-	    Statement stmt=conn.createStatement(); 
-	    String sql1="use master";  
-	    stmt.execute(sql1);
-	    Statement stmt1=conn.createStatement(); 
-	    String sql="sp_spaceused";  
-	    ResultSet rs=stmt1.executeQuery(sql);  
-	    while(rs.next())  
-	    {  
-	    	System.out.println(rs.getString(1)+"-"+rs.getString(2));
-            System.out.println("->");   
-	    }  
-	    try  
-	    {  
-	        rs.close();  
-	        stmt.close();  
-	        conn.close();  
-	    }  
-	    catch(Exception e)  
-	    {  
-	        System.err.println("error");
-	    }  
+//		MechineState ms = new MechineState();
+//		
+//		CPUInfo cpuInfo = new CPUInfo();
+//		ArrayList<FileSystemInfo> fileSystemInfos = new ArrayList<FileSystemInfo>();
+//		MemoryInfo mInfo = new MemoryInfo();
+//		SystemInfo sInfo = new SystemInfo();
+//		
 //		Sigar sigar = new Sigar();
-//		Mem mem = sigar.getMem();
-//		// 内存总量
-//        System.out.println("Total = " + mem.getTotal() / 1024L + "K av");
-//        // 当前内存使用量
-//        System.out.println("Used = " + mem.getUsed() / 1024L + "K used");
-//        // 当前内存剩余量
-//		System.out.println("Free = " + mem.getFree() / 1024L + "K free");
-//		OperatingSystem OS = OperatingSystem.getInstance();
-//        // 操作系统内核类型如： 386、486、586等x86
-//        System.out.println("OS.getArch() = " + OS.getArch());
-//        System.out.println("OS.getCpuEndian() = " + OS.getCpuEndian());//
-//        System.out.println("OS.getDataModel() = " + OS.getDataModel());//
-//        // 系统描述
-//        System.out.println("OS.getDescription() = " + OS.getDescription());
-//        System.out.println("OS.getMachine() = " + OS.getMachine());//
-//        // 操作系统类型
-//        System.out.println("OS.getName() = " + OS.getName());
-//        System.out.println("OS.getPatchLevel() = " + OS.getPatchLevel());//
-//        // 操作系统的卖主
-//        System.out.println("OS.getVendor() = " + OS.getVendor());
-//        // 卖主名称
-//        System.out.println("OS.getVendorCodeName() = " + OS.getVendorCodeName());
-//        // 操作系统名称
-//        System.out.println("OS.getVendorName() = " + OS.getVendorName());
-//        // 操作系统卖主类型
-//        System.out.println("OS.getVendorVersion() = " + OS.getVendorVersion());
-//        // 操作系统的版本号
-//        System.out.println("OS.getVersion() = " + OS.getVersion());
-//        CpuInfo infos[] = sigar.getCpuInfoList();
-//        for (int i = 0; i < infos.length; i++) {//不管是单块CPU还是多CPU都适用
-//            CpuInfo info = infos[i];
-//            System.out.println("mhz=" + info.getMhz());//CPU的总量MHz
-//            System.out.println("vendor=" + info.getVendor());//获得CPU的卖主，如：Intel
-//            System.out.println("model=" + info.getModel());//获得CPU的类别，如：Celeron
-//            System.out.println("cache size=" + info.getCacheSize());//缓冲存储器数量
-//        }
-//        FileSystem fslist[] = sigar.getFileSystemList();
-//        String dir = System.getProperty("user.home");//当前用户文件夹路径
-//        for (int i = 0; i < fslist.length; i++) {
-//            System.out.println("/n~~~~~~~~~~" + i + "~~~~~~~~~~");
-//            FileSystem fs = fslist[i];
-//            // 分区的盘符名称
-//            System.out.println("fs.getDevName() = " + fs.getDevName());
-//            // 分区的盘符名称
-//            System.out.println("fs.getDirName() = " + fs.getDirName());
-//            System.out.println("fs.getFlags() = " + fs.getFlags());//
-//            // 文件系统类型，比如 FAT32、NTFS
-//            System.out.println("fs.getSysTypeName() = " + fs.getSysTypeName());
-//            // 文件系统类型名，比如本地硬盘、光驱、网络文件系统等
-//            System.out.println("fs.getTypeName() = " + fs.getTypeName());
-//            // 文件系统类型
-//            System.out.println("fs.getType() = " + fs.getType());
-//            FileSystemUsage usage = null;
+//		
+//		cpuInfo.setCPUnum(sigar.getCpuInfoList().length);
+//		CpuInfo info = sigar.getCpuInfoList()[0];
+//		cpuInfo.setRate(info.getMhz()+"MHz");
+//		cpuInfo.setVender(info.getVendor());
+//		cpuInfo.setModel(info.getModel());
+//		cpuInfo.setCache(info.getCacheSize()+"KB");
+//		ms.setCpuInfo(cpuInfo);
+//		
+//		FileSystem fslist[] = sigar.getFileSystemList();
+//		for (int i = 0; i < fslist.length; i++) {
+//			FileSystem fs = fslist[i];
+//			FileSystemInfo fsi = new FileSystemInfo();
+//			fsi.setName(fs.getDevName());
+//			FileSystemUsage usage = null;
 //            try {
 //               usage = sigar.getFileSystemUsage(fs.getDirName());
 //            } catch (SigarException e) {
@@ -202,18 +87,11 @@ public class SigarTest {
 //            case 1: // TYPE_NONE
 //               break;
 //            case 2: // TYPE_LOCAL_DISK : 本地硬盘
-//               // 文件系统总大小
-//               System.out.println(" Total = " + usage.getTotal() + "KB");
-//               // 文件系统剩余大小
-//               System.out.println(" Free = " + usage.getFree() + "KB");
-//               // 文件系统可用大小
-//               System.out.println(" Avail = " + usage.getAvail() + "KB");
-//               // 文件系统已经使用量
-//               System.out.println(" Used = " + usage.getUsed() + "KB");
+//               fsi.setTotal(usage.getTotal()+"KB");
+//               fsi.setUsed(usage.getUsed()+"KB");
 //               double usePercent = usage.getUsePercent() * 100D;
-//               // 文件系统资源的利用率
-//               System.out.println(" Usage = " + usePercent + "%");
-//break;
+//               fsi.setPercent(usePercent+"%");
+//               break;
 //            case 3:// TYPE_NETWORK ：网络
 //               break;
 //            case 4:// TYPE_RAM_DISK ：闪存
@@ -223,10 +101,95 @@ public class SigarTest {
 //            case 6:// TYPE_SWAP ：页面交换
 //               break;
 //            }
-//            System.out.println(" DiskReads = " + usage.getDiskReads());
-//            System.out.println(" DiskWrites = " + usage.getDiskWrites());
-//        }
-//        return;
-}
-}
-
+//            fileSystemInfos.add(fsi);
+//		}
+//		System.err.println("size:"+fileSystemInfos.size());
+//		ms.setFileSystems(fileSystemInfos);
+//		
+//		Mem mem = sigar.getMem();
+//		mInfo.setMemTotal(mem.getTotal() / 1024L + "KB");
+//		mInfo.setMemUsed(mem.getUsed() / 1024L + "KB");
+//		mInfo.setMemNotUsed(mem.getFree() / 1024L + "KB");
+//		ms.setMemoryInfo(mInfo);
+//		
+//		OperatingSystem OS = OperatingSystem.getInstance();
+//		sInfo.setArch(OS.getArch());
+//		sInfo.setName(OS.getName());
+//		sInfo.setVender(OS.getVendor());
+//		sInfo.setVersion(OS.getVersion());
+//		ms.setSystemInfo(sInfo);
+//		
+//		
+//	    Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();//通过jtds方式连接  	      
+//	    String url ="jdbc:jtds:sybase://155.36.0.104:5100/JUDGE";//通过jtds方式连接，test为数据库名  	      
+//	    Connection conn= DriverManager.getConnection(url, "sa","");  
+//	    Statement stmt = conn.createStatement();
+////	    localip = "155.36.0.104";
+//	    String sql = "select * from T_SERVERS where IP='"+localip+"'";
+//	    ResultSet rs = stmt.executeQuery(sql);
+//	    int bh = -1;
+//	    while (rs.next()) {
+//		    bh  = rs.getInt("BH");
+//	    }
+//	    
+//	    //cpu信息存储
+//	    String sql2 = "select * from T_CPU where SERVERBH="+bh+"";
+//	    ResultSet rs2 = stmt.executeQuery(sql2);
+//	    if (rs2.next()) {
+//	    	String sql3 = "update T_CPU set CPUNUM ="+cpuInfo.getCPUnum()+",RATE='"+cpuInfo.getRate()+"' , VENDER='"+cpuInfo.getVender()+"' , MODEL='"+cpuInfo.getModel()+"' , CACHESIZE='"+cpuInfo.getCache()+"' where SERVERBH="+bh;
+//	    	stmt.executeUpdate(sql3);
+//		}else{
+//			 String maxbhsql = "select max(BH) M from T_CPU";
+//			 ResultSet rs3 = stmt.executeQuery(maxbhsql);
+//			 int maxbh = rs3.getInt("M");
+//			 maxbh++;
+//			String sql3 = "insert into T_CPU values("+maxbh+","+bh+",'"+cpuInfo.getCPUnum()+"','"+cpuInfo.getRate()+"','"+cpuInfo.getVender()+"','"+cpuInfo.getModel()+"','"+cpuInfo.getCache()+"')";
+//	    	stmt.executeUpdate(sql3);
+//		}
+//	    
+//	    //内存信息存储
+//	    String sql3 = "select * from T_MEMORYINFO where SERVERBH="+bh+"";
+//	    ResultSet rs3 = stmt.executeQuery(sql3);
+//	    if (rs3.next()) {
+//	    	String sql4 = "update T_MEMORYINFO set TOTAL ="+mInfo.getMemTotal()+",USED='"+mInfo.getMemUsed()+"' , PERCENT='"+mem.getUsedPercent()+"'  where SERVERBH="+bh;
+//	    	stmt.executeUpdate(sql4);
+//		}else{
+//			 String maxbhsql = "select max(BH) M from T_MEMORYINFO";
+//			 ResultSet rs4 = stmt.executeQuery(maxbhsql);
+//			 int maxbh = rs4.getInt("M");
+//			 maxbh++;
+//			String sql4 = "insert into T_MEMORYINFO values("+maxbh+","+bh+",'"+mInfo.getMemTotal()+"','"+mInfo.getMemUsed()+"','"+mem.getUsedPercent()+"')";
+//	    	stmt.executeUpdate(sql4);
+//		}
+//	    
+//	    //系统信息存储
+//	    String sql4 = "select * from T_SYSTEMINFO where SERVERBH="+bh+"";
+//	    ResultSet rs4 = stmt.executeQuery(sql4);
+//	    if (rs4.next()) {
+//	    	String sql5 = "update T_SYSTEMINFO set ARCH ="+sInfo.getArch()+",SYSNAME='"+sInfo.getName()+"' , VENDER='"+sInfo.getVender()+"',VERSION='"+sInfo.getVersion()+"'  where SERVERBH="+bh;
+//	    	stmt.executeUpdate(sql5);
+//		}else{
+//			 String maxbhsql = "select max(BH) M from T_SYSTEMINFO";
+//			 ResultSet rs5 = stmt.executeQuery(maxbhsql);
+//			 int maxbh = rs5.getInt("M");
+//			 maxbh++;
+//			String sql5 = "insert into T_SYSTEMINFO values("+maxbh+","+bh+",'"+sInfo.getArch()+"','"+sInfo.getName()+"','"+sInfo.getVender()+"','"+sInfo.getVersion()+"')";
+//	    	stmt.executeUpdate(sql5);
+//		}
+//	    
+//	    //磁盘信息存储
+//	    String sql5 = "delete from T_FILESYSTEM where SERVERBH="+bh+"";
+//	    stmt.execute(sql5);
+//	    for(FileSystemInfo fi :fileSystemInfos){
+//	    	String maxbhsql = "select max(BH) M from T_FILESYSTEM";
+//			 ResultSet rs5 = stmt.executeQuery(maxbhsql);
+//			 int maxbh = rs5.getInt("M");
+//			 maxbh++;
+//	    	String sql6 = "insert into T_FILESYSTEM values("+maxbh+","+bh+",'"+fi.getName()+"','"+fi.getTotal()+"','"+fi.getUsed()+"','"+fi.getPercent()+"')";
+//	    	stmt.executeUpdate(sql6);
+//	    }
+//	    
+//
+//}
+//}
+//

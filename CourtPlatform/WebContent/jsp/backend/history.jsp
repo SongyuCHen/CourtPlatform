@@ -58,7 +58,7 @@
 	        				<img src="${pageContext.request.contextPath}/images/history/${his.c_img }" onclick="uploadCall(this)" id="historyImg${his.bh}"/>
 	        				<form class="" style="display: none;margin-top:5px">
 							  <div class="form-group">
-							    <input class="form-control"  type="file" id="uploadRevise" name="uploadRevise">
+							    <input class="form-control"  type="file" id="uploadRevise${his.bh}" name="uploadRevise">
 							  </div>
 	        					<button type="button"  class="btn btn-default upload" onclick="upload(${his.bh})" style="float:right;">上传</button>
 							  </form>
@@ -298,14 +298,14 @@
    
    
    function upload(bh){
-	   var info = $("#uploadRevise").val();
+	   var info = $("#uploadRevise"+bh).val();
 		var arr=info.split('\\');//注split可以用字符或字符串分割 
 		var my=arr[arr.length-1];//这就是要取得的图片名称 
 	 //上传图片
 		$.ajaxFileUpload({
 			url:"${pageContext.request.contextPath}/backend/uploadhistory2?bh="+bh,
 			secureuri:false,                       //是否启用安全提交,默认为false 
-			fileElementId:'uploadRevise',           //文件选择框的id属性
+			fileElementId:'uploadRevise'+bh,           //文件选择框的id属性
 			dataType:'text',                   //服务器返回的格式,可以是json或xml等
 			success:function(data, status){        //服务器响应成功时的处理函数
 				data = data.replace("<PRE>", '');  //ajaxFileUpload会对服务器响应回来的text内容加上<pre>text</pre>前后缀

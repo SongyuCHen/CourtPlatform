@@ -20,12 +20,6 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/app/business.js"></script>
 	
-<!-- 时间轴 -->
-
-<link href='https://fonts.useso.com/css?family=Playfair+Display:700,900|Fira+Sans:400,400italic' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/timeline/css/reset.css"> <!-- CSS reset -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/lib/timeline/css/default.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/timeline/css/style.css"> <!-- Resource style -->
 <style type="text/css">
   .cd-horizontal-timeline {
     margin: 0em auto;
@@ -45,61 +39,14 @@
 	margin-bottom:6em;
 	}
 </style>
-<title>院史陈列</title>
+<title>法院要闻</title>
 </head>
 <body>
 <div class="back" style="width:500px;height:100px;float:left">
 	<a href="${pageContext.request.contextPath}/index" style="width:500px;height:100px;display: inline-block"></a>
 </div>
 <div class="icon-container">
-<section class="cd-horizontal-timeline" style="margin-top:30px">
-<div class="timeline">
-<div class="events-wrapper">
-	<div class="events" style="width:${(historys.size())*125+100}px">
-		<ol>
- 		<c:forEach items="${historys}" var="his" varStatus="status"> 
-			<li><a style="left:${(status.index+1)*120}px" href="#0" data-date="${his.time}" <c:if test="${status.index == 0}">class="selected"</c:if>>${his.time}</a></li>
-		</c:forEach>
-			<!-- <li><a href="#0" data-date="28/01/2014" class="selected">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="20/04/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="20/05/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="09/07/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="30/08/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="15/09/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="01/11/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="10/12/2014">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="19/01/2015">1992年<br>10月12日</a></li>
-			<li><a href="#0" data-date="03/03/2015">1992年<br>10月12日</a></li> -->
-		</ol>
 
-		<span class="filling-line" aria-hidden="true"></span>
-			</div> <!-- .events -->
-		</div> <!-- .events-wrapper -->
-			
-		<ul class="cd-timeline-navigation">
-			<li><a href="#0" class="prev inactive">Prev</a></li>
-			<li><a href="#0" class="next">Next</a></li>
-		</ul> <!-- .cd-timeline-navigation -->
-	</div> <!-- .timeline -->
-
-	<div class="events-content">
-		<ol>
-		<c:forEach items="${historys}" var="his" varStatus="status"> 
-			<li <c:if test="${status.index == 0}">class="selected"</c:if> data-date="${his.time}">
-			<div style="float:left;width:45%">
-				<h2>${his.title}</h2>
-				<em>${his.time}</em>
-				<p>	
-					${his.content}
-				</p>
-			</div>
-				<img src="${pageContext.request.contextPath}/images/history/${his.c_img}" 
-				style="float:left;width:375px;margin-bottom:30px;max-height:280px"/>
-			</li>
-		</c:forEach>
-		</ol>
-	</div> <!-- .events-content -->
-</section>
 </div><!-- /icon-container -->
 
 
@@ -169,7 +116,14 @@
 		}});
 	}
 	$(function(){
-		
+		$.ajax({url:"http://dx.fy.com/TopNews/ListViews",
+			type:"post",
+			dataType:"json",
+			async:false,
+			success:function(data){
+				
+			}
+		});
 	});
 	var MODEL_COUNT = ${menuContext.subModels.size()};
 	var PER_PAGE = ${sessionScope.per_page};

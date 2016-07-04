@@ -51,6 +51,13 @@ public class ZjdxController extends BaseController{
 		mv.addObject("menuContext", ms.getMenuContext("/zjdx/index"));
 		return mv;
 	}
+	@RequestMapping(value="/zjdx/fyjs/fyyw",method=RequestMethod.GET)
+	public ModelAndView  getFYYW(){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("zjdx/fyyw");
+		mv.addObject("menuContext", ms.getMenuContext("/zjdx/index"));
+		return mv;
+	}
 	@RequestMapping(value="/zjdx/ryzt/yscl",method=RequestMethod.GET)
 	public ModelAndView getYSCL(String url){
 		ModelAndView mv = new ModelAndView();
@@ -67,5 +74,4 @@ public class ZjdxController extends BaseController{
 		mv.addObject("awards", as.getAwards());
 		return mv;
 	}
-
 }

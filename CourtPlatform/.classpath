@@ -82,5 +82,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sigar.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
+	<classpathentry kind="lib" path="src/jconn3.jar"/>
+	<classpathentry kind="lib" path="src/jtds-1.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

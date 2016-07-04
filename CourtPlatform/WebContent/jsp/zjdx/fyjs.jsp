@@ -160,7 +160,7 @@
 			var line;
 			var models = data.modelMap.menuContext.subModels;
 			for(var o in models){
-				if(o%6 == 0){
+				if(o%5 == 0){
 					 line = document.createElement("div");
 					 $(line).attr("class","icon-line") ;
 					 $(".icon-container").empty();

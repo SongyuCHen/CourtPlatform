@@ -13,8 +13,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">欢迎：</a></li>
-            <li><a href="#">登出</a></li>
+            <!-- <li><a href="#">欢迎：</a></li>
+            <li><a href="#">登出</a></li> -->
           </ul>
           <!-- <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">

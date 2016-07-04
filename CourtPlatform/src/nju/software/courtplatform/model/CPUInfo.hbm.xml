@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-3-2 17:43:59 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="nju.software.courtplatform.model.CPUInfo" table="T_CPU" schema="dbo" catalog="JUDGE">
+        <cache usage="read-write" />
+        <id name="bh" type="int">
+            <column name="BH" />
+            <generator class="assigned" />
+        </id>
+        <property name="serverbh" type="java.lang.Integer">
+            <column name="SERVERBH" />
+        </property>
+        <property name="cpunum" type="java.lang.Integer">
+            <column name="CPUNUM" />
+        </property>
+        <property name="rate" type="java.lang.String">
+            <column name="RATE" />
+        </property>
+        <property name="vender" type="java.lang.String">
+            <column name="VENDER" />
+        </property>
+        <property name="model" type="java.lang.String">
+            <column name="MODEL" />
+        </property>
+        <property name="cachesize" type="java.lang.String">
+            <column name="CACHESIZE" />
+        </property>
+    </class>
+</hibernate-mapping>

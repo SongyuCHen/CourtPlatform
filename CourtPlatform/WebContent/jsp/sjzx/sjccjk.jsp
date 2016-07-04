@@ -19,6 +19,7 @@
 	src="${pageContext.request.contextPath}/js/app/common.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/app/business.js"></script>
+
 <title>业务应用系统</title>
 </head>
 <body>
@@ -28,16 +29,9 @@
 <div class="icon-container">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/sjzx/fwqyxjk.css" />
 	<div class="left-col">
-		<p>数据库1</p>
-		<p>数据库2</p>
-		<p>数据库3</p>
-		<p>数据库4</p>
-		<p>数据库5</p>
-		<p>数据库6</p>
-		<p>数据库7</p>
-		<p>数据库8</p>
-		<p>数据库9</p>
-		<p>数据库10</p>
+	<c:forEach items="${dbs}" var="db" varStatus="status"> 
+		<p onclick="showInfo('${db.IP}','${db.port}')">${db.title}</p>
+	</c:forEach>
 	</div>
 	<div class="right-col">
 		<table cellpadding="0" cellspacing="0">
@@ -45,17 +39,17 @@
 				<td>
 					<h3>数据存储</h3>
 					<div>
-					<p>已用空间：758943KB</p>
-					<p>剩余空间：84503985KB</p>
-					<p>已使用率：2%</p>
+					<p>已用空间：<span id="mem_used">758943</span>MB</p>
+					<p>剩余空间：<span id="mem_free">84503985</span>MB</p>
+					<p>已使用率：<span id="mem_rate">2</span>%</p>
 					</div>
 				</td>
 				<td>
 					<h3>日志存储</h3>
 					<div>
-					<p>已用空间：758943KB</p>
-					<p>剩余空间：84503985KB</p>
-					<p>已使用率：2%</p>
+					<p>已用空间：<span id="log_used">758943</span>MB</p>
+					<p>剩余空间：<span id="log_free">84503985</span>MB</p>
+					<p>已使用率：<span id="log_rate">2</span>%</p>
 					</div>
 				</td>
 			</tr>
@@ -113,17 +107,21 @@
 			$(".icon-container").empty();
 			var line;
 			var models = data.modelMap.menuContext.subModels;
-			for(var o in models){
-				if(o%6 == 0){
-					 line = document.createElement("div");
-					 $(line).attr("class","icon-line") ;
-					 $(".icon-container").empty();
-					 $(".icon-container").append(line);
+			if(models.length != 0){
+				for(var o in models){
+					if(o%5 == 0){
+						 line = document.createElement("div");
+						 $(line).attr("class","icon-line") ;
+						 $(".icon-container").empty();
+						 $(".icon-container").append(line);
+					}
+					$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
+					$(".icon").click(function(){
+						window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
+					});
 				}
-				$(line).append("<div class=\"icon\" id=\""+models[o].c_url+"\"\><img src=\"${pageContext.request.contextPath}/images/icon/"+models[o].c_img+"\"/></div>");
-				$(".icon").click(function(){
-					window.location.href="${pageContext.request.contextPath}/"+$(this).attr('id');
-				});
+			}else{
+				window.location.href="${pageContext.request.contextPath}"+url;
 			}
 			
 		}});
@@ -177,6 +175,33 @@
 			isFold = 0;
 		}
 	}
+	
+	function showInfo(ip,port){
+		$.ajax(
+	  			{url:"${pageContext.request.contextPath}/sjzx/dbdata",
+	  				type:"post",
+	  				dataType:"json",
+	  				data:{
+	  					"ip":ip,
+	  					"port":port
+	  				},
+	  				async:false,
+	  				success:function(data){
+	  					console.log(data);
+	  					$("#mem_used").html(data.model.mem_used);
+	  					$("#mem_free").html(data.model.mem_free);
+	  					$("#mem_rate").html(data.model.mem_rate);
+	  					$("#log_used").html(data.model.log_used);
+	  					$("#log_free").html(data.model.log_free);
+	  					$("#log_rate").html(data.model.log_rate);
+	  				}
+	  			});	
+	}
+	
+	$(function(){
+		$(".left-col p:first").click();
+		$(".left-col p:first").attr("class","active");
+	});
 	</script>
 </body>
 </html>

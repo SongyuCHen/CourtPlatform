@@ -13,7 +13,10 @@ public class DescriptionDao extends BaseDao{
 	
 	public String getDescription(){
 		Session session = sf.getCurrentSession();
-		Query query = session.createQuery("from Description t"); 
+		Query query = session.createQuery("from Description t");
+		if (query.list().isEmpty()) {
+			return null;
+		}
 		return ((Description)query.list().get(0)).getDescription();
 	}
 	

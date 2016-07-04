@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-3-2 17:43:59 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="nju.software.courtplatform.model.FileSystem" table="T_FILESYSTEM" schema="dbo" catalog="JUDGE">
+        <cache usage="read-write" />
+        <id name="bh" type="int">
+            <column name="BH" />
+            <generator class="assigned" />
+        </id>
+        <property name="serverbh" type="java.lang.Integer">
+            <column name="SERVERBH" />
+        </property>
+        <property name="devname" type="java.lang.String">
+            <column name="DEVNAME" />
+        </property>
+        <property name="total" type="java.lang.String">
+            <column name="TOTAL" />
+        </property>
+        <property name="used" type="java.lang.String">
+            <column name="USED" />
+        </property>
+        <property name="percent" type="java.lang.String">
+            <column name="PERCENT" />
+        </property>
+    </class>
+</hibernate-mapping>

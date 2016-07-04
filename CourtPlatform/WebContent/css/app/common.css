@@ -3,10 +3,10 @@ body {
 	padding: 0;
 	font-family: "Microsoft YaHei";
 	background-image: url(../../images/second_blue_bg.jpg);
-	background-size: cover;
+	background-size: 100% 100%;
 	background-repeat:no-repeat;
-	min-width: 1200px;
-	min-height: 675px;
+	width: 1024px;
+	height: 768px;
 }
 
 .board{
@@ -26,7 +26,7 @@ body {
 .btn-bar {
 	position: fixed;
 	top: 80%;
-	left: 10%;
+	left: 12%;
 	z-index:2;
 	width:80%;
 	height:61px;

@@ -18,11 +18,11 @@ ZoomPic.prototype =
 		this._doPrev = function () {return _this.doPrev.apply(_this)};
 		this._doNext = function () {return _this.doNext.apply(_this)};
 		this.options = [
-			{width:476, height:270, top:40, left:0, zIndex:1},
-			{width:426, height:310, top:20, left:50, zIndex:2},
-			{width:654, height:350, top:0, left:150, zIndex:3},
-			{width:426, height:310, top:20, left:480, zIndex:2},
-			{width:476, height:270, top:40, left:476, zIndex:1},
+			{width:376, height:270, top:40, left:50, zIndex:1},
+			{width:326, height:310, top:20, left:100, zIndex:2},
+			{width:454, height:350, top:0, left:200, zIndex:3},
+			{width:326, height:310, top:20, left:380, zIndex:2},
+			{width:376, height:270, top:40, left:376, zIndex:1},
 //			{width:365, height:252, top:40, left:0, zIndex:1},
 //			{width:405, height:280, top:20, left:60, zIndex:2},
 //			{width:445, height:308, top:0, left:130, zIndex:3},

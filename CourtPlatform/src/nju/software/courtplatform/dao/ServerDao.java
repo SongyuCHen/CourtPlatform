@@ -7,16 +7,36 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import nju.software.courtplatform.model.Award;
-import nju.software.courtplatform.model.History;
+import nju.software.courtplatform.model.CPUInfo;
+import nju.software.courtplatform.model.FileSystem;
+import nju.software.courtplatform.model.MemoryInfo;
 import nju.software.courtplatform.model.ServerInfo;
+import nju.software.courtplatform.model.SystemInfo;
 
 @Repository
 public class ServerDao extends BaseDao{
 	public ServerInfo getByBH(int bh){
 		return (ServerInfo)sf.getCurrentSession().get(ServerInfo.class, bh);
+	}
+	
+	public CPUInfo getCPUInfo(int serverbh){
+		return (CPUInfo)sf.getCurrentSession().createCriteria(CPUInfo.class).add(Restrictions.eq("serverbh", serverbh)).uniqueResult();		
+	}
+	
+	public SystemInfo getSystemInfo(int serverbh){
+		return (SystemInfo)sf.getCurrentSession().createCriteria(SystemInfo.class).add(Restrictions.eq("serverbh", serverbh)).uniqueResult();		
+	}
+	
+	public MemoryInfo getMemoryInfo(int serverbh){
+		return (MemoryInfo)sf.getCurrentSession().createCriteria(MemoryInfo.class).add(Restrictions.eq("serverbh", serverbh)).uniqueResult();		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<FileSystem> getFileSystem(int serverbh){
+		return sf.getCurrentSession().createCriteria(FileSystem.class).add(Restrictions.eq("serverbh", serverbh)).list();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -65,4 +85,5 @@ public class ServerDao extends BaseDao{
 		query.setParameter(3, bh);
 		return query.executeUpdate()==1;
 	}
+	
 }
